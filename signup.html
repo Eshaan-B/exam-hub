@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examhub | Home</title>
+
+    <link rel="shortcut icon" href="resources/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="css/signup.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
+
+    <script src="https://kit.fontawesome.com/551e46de4a.js" crossorigin="anonymous"></script>
+
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- NAVBAR  -->
+    <header>
+        <nav class="navbar navbar-expand-lg fixed-top py-3" id="nav-bar">
+            <div class="container">
+                <div class="logo">
+                    <a href="index.html">
+                        <img src="resources/logo.svg" alt="Exam Hub">
+                    </a>
+                </div>
+                <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler navbar-toggler-right">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <div id="navbarSupportedContent" class="collapse navbar-collapse">
+                    <ul class="navbar-nav ml-auto" id="current">
+                        <li class="nav-item active">
+                            <a href="index.html" class="button2" id="about-button">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="login.html" class="button2" id="contact-button">Login</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <!-- NAVBAR  -->
+    <form action="" id="login-form">
+        <h1>Sign Up</h1>
+        <br>
+        <label>Username</label>
+        <input type="text">
+        <label>Email ID</label>
+        <input type="text">
+        <label>Password</label>
+        <input type="password">
+        <label>Confirm Password</label>
+        <input type="password">
+        <center><a href="termsandconditions.html" id="terms-conditions">By signing up you accept to our terms and contions</a></center>
+        <br>
+        <!-- <button>Sign Up</button> -->
+        <a class="button" id="signup-form-button">SignUp</a>
+        <!-- <button class="button2" id="about-button">Login</button> -->
+    </form>
+    <style>
+        h1 {
+            font-size: 50px;
+            text-align: center;
+            color: black;
+            text-shadow: 2px 2px 4px rgba(0,0,0,.2);
+            letter-spacing: 3px;
+            margin-top: 5%; 
+            margin-bottom: 5%; 
+            opacity: 0.7;
+        }
+
+        label {
+            font-size: 20px; 
+            color: black;
+            margin-left: 10%;
+            opacity: 0.8;
+            text-shadow: 2px 2px 4px rgba(0,0,0,.2);
+        }
+
+        input {
+            width: 80%;
+            margin: 5% auto;
+            margin-bottom: 8%;
+            border: none;
+            outline: none;
+            background: transparent;
+            color: black;
+            border-bottom: 1px solid rgba(4, 4, 4, 0.6);
+            opacity: 0.8;
+        }
+        button {
+            width: 50%;
+            margin: 3%  auto;
+            color: black;
+            font-size: 15px;
+            opacity: 0.7;
+            background: rgba(255,255,255,0.06);
+            padding: 10px 30px;
+            border: none;
+            outline: none;
+            border-radius: 20px;
+        }
+
+        a {
+            margin-left: 10%;
+        }
+
+        #terms-conditions {
+            align-items: center;
+            margin-left: 1px;
+        }
+    </style>
+
+    <script src="js/main.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+    </script>
+</body>
+</html>
