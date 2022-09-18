@@ -22,11 +22,10 @@ exports.postUpload = (req, res, next) => {
   var encode_file = paper.toString("base64");
   var final_file = {
     contentType: req.file.mimetype,
-    image: Buffer(encode_file, "base64"),
+    image: Buffer.from(encode_file, "base64"),
   };
 
   //UPLOADING TO MONGO:
-
   const file = new File({
     _id: new mongoose.Types.ObjectId(),
     filename: req.body.filename,
