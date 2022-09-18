@@ -1,6 +1,9 @@
 const File = require("../models/file");
 const mongoose = require("mongoose");
 
+exports.getLoginPage = (req, res, next) => {
+  res.render("auth/login");
+};
 exports.postLogin = (req, res, next) => {};
 exports.getSignUpPage = (req, res, next) => {};
 exports.getUserProfile = (req, res, next) => {};

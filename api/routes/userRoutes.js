@@ -6,12 +6,10 @@ router.use("/about", (req, res, next) => {});
 
 router.use("/contact", (req, res, next) => {});
 
-router.get("/login", (req, res, next) => {
-  res.render("login");
-});
-router.get("/signup", (req, res, next) => {
-  res.render("signup");
-});
+router.get("/login", userController.getLoginPage);
+router.get("/signup", userController.getSignUpPage);
+
+router.explore;
 
 router.get("/paper/:paperId", userController.getPaperById);
 

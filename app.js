@@ -5,12 +5,15 @@ const path = require("path");
 const morgan = require("morgan");
 const cors = require("cors");
 require("dotenv").config();
-
 const mongoose = require("mongoose");
 
 const userRoutes = require("./api/routes/userRoutes");
 const adminRoutes = require("./api/routes/adminRoutes");
 const errorController = require("./api/controllers/errorController");
+const siteRoutes = require("./api/routes/siteRoutes");
+const fileRoutes = require("./api/routes/fileRoutes");
+const file = require("./api/models/file");
+
 const app = express();
 
 mongoose.connect(
@@ -27,13 +30,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.get("/", (req, res, next) => {
-  res.render("index.ejs");
-});
-
+app.use(siteRoutes);
+app.use("/explore", fileRoutes);
 app.use("/admin", adminRoutes);
 app.use(userRoutes);
-
 app.use(errorController.get404);
 
 module.exports = app;
