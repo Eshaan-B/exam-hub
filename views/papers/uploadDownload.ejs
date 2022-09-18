@@ -9,14 +9,16 @@
   <body>
     <h1><%=mode%> page</h1>
     <%if(mode === 'upload'){%>
-    <form action="/explore/upload" method="post">
+    <form action="/explore/upload" enctype="multipart/form-data" method="post">
       <label for="filename">Enter Filename</label>
       <input type="text" name="filename" id="filename" />
       <label for="subject">Enter subject name</label>
       <input type="text" name="subject" id="subjectName" />
-      <input type="file" name="file" id="file_upload_button" /><% } %>
+      <input type="file" name="file" id="file_upload_button" />
       <br /><br />
       <button type="submit">UPload</button>
+
+      <% } %>
     </form>
   </body>
 </html>

@@ -21,6 +21,14 @@ mongoose.connect(
     process.env.MONGO_ATLAS_PWD +
     "@examhub.mwatb2a.mongodb.net/?retryWrites=true&w=majority"
 );
+var conn = mongoose.connection;
+conn.on("connected", function () {
+  console.log("database is connected successfully");
+});
+conn.on("disconnected", function () {
+  console.log("database is disconnected successfully");
+});
+conn.on("error", console.error.bind(console, "connection error:"));
 
 app.set("view engine", "ejs");
 app.set("views", "views");
