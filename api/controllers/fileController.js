@@ -32,7 +32,7 @@ exports.getOneById = async (req, res, next) => {
 
 exports.getUploadOrDownload = (req, res, next) => {
   const mode = req.query.mode;
-  res.render("papers/uploadDownload", { mode: mode });
+  res.render("papers/upload", { mode: mode });
 };
 
 function savePaper(paperObject, paperEncoded) {

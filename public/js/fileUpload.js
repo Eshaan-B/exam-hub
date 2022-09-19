@@ -10,4 +10,5 @@ FilePond.setOptions({
   pdfPreviewHeight: 320,
   pdfComponentExtraParams: "toolbar=0&view=fit&page=1",
 });
+
 FilePond.parse(document.body);
