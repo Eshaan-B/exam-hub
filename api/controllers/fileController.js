@@ -29,9 +29,10 @@ exports.getOneById = async (req, res, next) => {
   const filename = await doc[0]["filename"];
   if (doc != null) {
     console.log("File found");
+    console.log(typeof doc[0].file);
     res
-      .set("Content-disposition", `attachment; filename=${filename}.pdf`)
-      .send(doc[0]["file"]);
+      .setHeader("Content-disposition", `attachment; filename=${filename}.pdf`)
+      .send(doc[0].file);
   } else {
     console.log("doc not found");
     res.redirect("/");
@@ -43,7 +44,6 @@ exports.getUploadOrDownload = async (req, res, next) => {
   let papers = [];
   if (mode === "download") {
     papers = await getAllFiles();
-    console.log(papers[0].filename);
     if (papers.length == 0) console.log("no files to show");
     else console.log(`Length: ${papers.length}`);
   }
