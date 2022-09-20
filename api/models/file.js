@@ -4,6 +4,8 @@ const fileSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
   filename: String,
   subject: String,
+  board: String,
+  class: String,
   file: Buffer,
 });
 

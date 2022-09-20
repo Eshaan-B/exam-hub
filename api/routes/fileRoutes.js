@@ -13,10 +13,8 @@ const router = express.Router();
 
 // const upload = multer({ storage: storage });
 
-router.get("/", fileController.getExplore);
-router.get("/getAll", fileController.getAllFiles);
+router.get("/", fileController.getUploadOrDownload);
 router.get("/getPaperById/:paperId", fileController.getOneById);
-router.get("/action", fileController.getUploadOrDownload);
 
 router.post("/upload", fileController.postUpload);
 

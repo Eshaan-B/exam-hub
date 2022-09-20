@@ -3,26 +3,34 @@ const fs = require("fs");
 const path = require("path");
 const ObjectId = require("mongodb").ObjectId;
 const File = require("../models/file");
+const { json } = require("express");
 
 exports.getExplore = (req, res, next) => {
   res.render("explore");
 };
 
-exports.getAllFiles = async (req, res, next) => {
-  const docs = await File.find({});
-  console.log("hey");
+async function getAllFiles() {
+  var docs = null;
+  try {
+    docs = await File.find({});
+    console.log("Fetched files successfully");
+  } catch (err) {
+    console.log(`Error occured while fetching files.... ${err}`);
+  }
+
   //  console.log(docs[1]["file"]);
   //Download it like this:
-  res.status(200).send(docs[1]["file"]);
-};
+  return docs;
+}
 
 exports.getOneById = async (req, res, next) => {
   const paperId = new ObjectId(req.params.paperId);
   const doc = await File.find({ _id: paperId });
+  const filename = await doc[0]["filename"];
   if (doc != null) {
     console.log("File found");
     res
-      .setHeader("Content-disposition", "attachment; filename=myfile.pdf")
+      .set("Content-disposition", `attachment; filename=${filename}.pdf`)
       .send(doc[0]["file"]);
   } else {
     console.log("doc not found");
@@ -30,9 +38,16 @@ exports.getOneById = async (req, res, next) => {
   }
 };
 
-exports.getUploadOrDownload = (req, res, next) => {
+exports.getUploadOrDownload = async (req, res, next) => {
   const mode = req.query.mode;
-  res.render("papers/upload", { mode: mode });
+  let papers = [];
+  if (mode === "download") {
+    papers = await getAllFiles();
+    console.log(papers[0].filename);
+    if (papers.length == 0) console.log("no files to show");
+    else console.log(`Length: ${papers.length}`);
+  }
+  res.render("papers/uploadDownload", { mode: mode, papers: papers });
 };
 
 function savePaper(paperObject, paperEncoded) {
@@ -47,8 +62,10 @@ exports.postUpload = (req, res, next) => {
   console.log("Reached PostUploadFile");
   const paper = new File({
     _id: new mongoose.Types.ObjectId(),
-    filename: req.body.filename,
+    filename: "examhubTest",
     subject: req.body.subject,
+    class: req.body.class,
+    board: req.body.board,
   });
   savePaper(paper, req.body.paper);
   console.log("Saving file....");

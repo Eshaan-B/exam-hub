@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg fixed-top py-3" id="nav-bar">
   <div class="container">
     <div class="logo">
-      <a href="index.html">
+      <a href="/">
         <img src="/resources/logo.svg" alt="Exam Hub" />
       </a>
     </div>
@@ -25,9 +25,17 @@
           <a href="login.html" class="button2" id="contact-button">Logout </a>
         </li>
         <li class="nav-item">
-          <a href="downloadqp.html" class="button2" id="login-button"
+          <% if(mode != null && mode ==='upload'){%>
+          <a href="/explore?mode=download" class="button2" id="login-button"
             >Download Papers</a
           >
+          <%} else{ %><a
+            href="/explore?mode=upload"
+            class="button2"
+            id="login-button"
+            >Upload papers</a
+          >
+          <% } %>
         </li>
       </ul>
     </div>
