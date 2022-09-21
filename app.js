@@ -1,10 +1,11 @@
 //spins up the express application
-
 const express = require("express");
 const path = require("path");
 const morgan = require("morgan");
 const cors = require("cors");
 require("dotenv").config();
+const flash = require("connect-flash");
+const session = require("express-session");
 const mongoose = require("mongoose");
 
 const userRoutes = require("./api/routes/userRoutes");
@@ -15,7 +16,15 @@ const fileRoutes = require("./api/routes/fileRoutes");
 const file = require("./api/models/file");
 
 const app = express();
-
+app.use(
+  session({
+    secret: "keyboard cat",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true },
+  })
+);
+app.use(flash());
 mongoose.connect(
   "mongodb+srv://examHub:" +
     process.env.MONGO_ATLAS_PWD +
@@ -34,14 +43,15 @@ app.set("view engine", "ejs");
 app.set("views", "views");
 app.use(morgan("dev"));
 app.use(cors());
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
+app.use(express.json({ limit: "16mb" }));
+app.use(express.urlencoded({ extended: false, limit: "16mb" }));
+
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use(siteRoutes);
+app.use(userRoutes);
 app.use("/explore", fileRoutes);
 app.use("/admin", adminRoutes);
-app.use(userRoutes);
 app.use(errorController.get404);
 
 module.exports = app;

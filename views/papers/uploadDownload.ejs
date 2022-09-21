@@ -4,21 +4,457 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><% if(mode === 'upload'){%>Upload<% }else{%>Download<% } %></title>
+    <title>Examhub | Home</title>
+    <link
+      href="https://unpkg.com/filepond@^4/dist/filepond.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
+      rel="stylesheet"
+    />
+
+    <script src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-pdf-preview/dist/filepond-plugin-pdf-preview.min.js"></script>
+
+    <script
+      defer
+      src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.js"
+    ></script>
+    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-rename/dist/filepond-plugin-file-rename.js"></script>
+
+    <script defer src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
+
+    <script defer src="/js/fileUpload.js"></script>
+
+    <link
+      rel="shortcut icon"
+      href="/resources/favicon.png"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="/css/userhome.css" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+      crossorigin="anonymous"
+    />
+
+    <script
+      src="https://kit.fontawesome.com/551e46de4a.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
   </head>
   <body>
-    <h1><%=mode%> page</h1>
-    <%if(mode === 'upload'){%>
-    <form action="/explore/upload" enctype="multipart/form-data" method="post">
-      <label for="filename">Enter Filename</label>
-      <input type="text" name="filename" id="filename" />
-      <label for="subject">Enter subject name</label>
-      <input type="text" name="subject" id="subjectName" />
-      <input type="file" name="file" id="file_upload_button" />
-      <br /><br />
-      <button type="submit">UPload</button>
+    <%-include('../includes/navbar') %>
 
-      <% } %>
-    </form>
+    <div class="wrapper" id="profile-picture">
+      <input type="file" class="profile-picture-upload" name="" />
+    </div>
+
+    <!-- <div class="container" id="user-interaction-buttons">
+        <h1 id="greetings">Hello, user</h1>
+        <br>
+        <a href="something" class="button2" id="upload-button">UPLOAD QUESTION PAPER</a>
+        <a href="login.html" class="button2" id="download-button">DOWNLOAD QUESTION PAPER</a>
+    </div> -->
+
+    <div action="" id="upload-form">
+      <h1 id="greetings">Hey, User</h1>
+      <!-- <a class="button" id="login-form-button">Login</a> -->
+      <!-- <button class="button2" id="about-button">Login</button> -->
+
+      <form id="upload-details" method="POST" action="/explore/upload">
+        <select name="board" id="board-select">
+          <option value="">Board</option>
+          <option value="CBSE">CBSE</option>
+          <option value="SBoard">State Board</option>
+        </select>
+        <select name="subject" id="subject-select">
+          <option value="">Subject</option>
+          <option value="biology">Biology</option>
+          <option value="math">Math</option>
+          <option value="english">English</option>
+          <option value="computer">Computer Science</option>
+          <option value="physics">Physics</option>
+          <option value="chemistry">Chemistry</option>
+        </select>
+        <select name="class" id="class-select">
+          <option value="">Class</option>
+          <option value="six">VI</option>
+          <option value="seven">VII</option>
+          <option value="eight">VIII</option>
+          <option value="nine">IX</option>
+          <option value="ten">X</option>
+          <option value="eleven">XI</option>
+          <option value="twelve">XII</option>
+        </select>
+        <% if(mode ==='upload'){%>
+        <input
+          type="file"
+          id="question-paper-upload"
+          class="filepond"
+          name="paper"
+          accept="image/png, image/jpeg"
+          required
+        />
+        <% } %>
+        <button type="submit" class="btn btn-success">
+          <% if(mode === 'upload'){%>Upload<%}else{%>Search<% } %>
+        </button>
+      </form>
+    </div>
+
+    <style>
+      .wrapper {
+        height: 100px;
+        width: 100px;
+        position: relative;
+        border: 2px solid #4e9af1;
+        border-radius: 50%;
+        /* background: url("/resources/profilepicture.png"); */
+        background-position: center center;
+        background-size: cover;
+        margin: 100px auto;
+        overflow: hidden;
+      }
+
+      .profile-picture-upload {
+        position: absolute;
+        bottom: 0;
+        outline: none;
+        color: transparent;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 15px 120px;
+        cursor: pointer;
+        transition: 0.5s;
+      }
+      .profile-picture-upload::-webkit-file-upload-button {
+        visibility: hidden;
+      }
+
+      #profile-picture {
+        position: absolute;
+        margin-right: 25px;
+        margin-top: 275px;
+        visibility: hidden;
+      }
+
+      #user-interaction-buttons {
+        text-decoration: none;
+        background: #e6f2ff;
+        padding: 70px 20px;
+      }
+
+      #greetings {
+        margin-top: 5%;
+        margin-left: 5%;
+        font-family: "Roboto", sans-serif;
+      }
+
+      #upload-button {
+        background-color: #70a1d7;
+        position: relative;
+        text-decoration: none;
+        margin-right: 20px;
+        height: 50px;
+        width: 400px;
+        margin-left: 5%;
+        margin-top: px;
+      }
+      #upload-button:hover {
+        background-color: white;
+        border-color: #70a1d7;
+        color: #70a1d7;
+      }
+
+      #download-button {
+        background-color: #36ae7c;
+        text-decoration: none;
+        margin-right: 20px;
+        height: 50px;
+        width: 400px;
+        margin-left: 50px;
+      }
+
+      #download-button:hover {
+        background-color: white;
+        border-color: #36ae7c;
+        color: #36ae7c;
+      }
+
+      #upload-form {
+        width: 75rem;
+        height: 20rem;
+        display: flex;
+        flex-direction: column;
+        background: rgba(255, 255, 255, 0.06);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        border-radius: 30px;
+        border-left: 10px solid rgba(255, 255, 255, 0.3);
+        border-top: 1px solid rgba(255, 255, 255, 0.3);
+        margin-top: 15%;
+        margin-left: 8%;
+        position: relative;
+      }
+
+      input {
+        width: 80%;
+        margin: 5% auto;
+        margin-bottom: 8%;
+        border: none;
+        outline: none;
+        background: transparent;
+        color: black;
+        border-bottom: 1px solid rgba(4, 4, 4, 0.6);
+        opacity: 0.8;
+      }
+
+      #board-select {
+        margin-top: 5%;
+        margin-left: 5%;
+        width: 250px;
+      }
+      #subject-select {
+        margin-top: 5%;
+        margin-left: 3%;
+        width: 250px;
+      }
+
+      #class-select {
+        margin-top: 5%;
+        margin-left: 3%;
+        margin-right: 3%;
+        width: 150px;
+      }
+
+      #question-paper-upload {
+        position: absolute;
+        margin-top: 1%;
+        margin-left: 4%;
+        /* margin-right: 3%; */
+        width: 850px;
+      }
+      #upload-details {
+        margin-left: 7%;
+      }
+      /* .filepond--item {
+          width: calc(50% - 0.5em);
+      } */
+    </style>
+    <% if(mode === 'download'){%>
+    <div>
+      <div id="homeqp-math">
+        <div class="card shadow mb-4">
+          <div class="card-body shadow-sm p-5">
+            <!-- Arrow breadcrumb-->
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb breadcrumb-arrow p-0">
+                <li class="breadcrumb-item">
+                  <a href="#" class="text-uppercase pl-3">CBSE</a>
+                </li>
+                <li class="breadcrumb-item pl-0">
+                  <a href="#" class="text-uppercase">Math</a>
+                </li>
+                <li
+                  aria-current="page"
+                  class="breadcrumb-item pl-0 active text-uppercase pl-4"
+                >
+                  XII
+                </li>
+              </ol>
+            </nav>
+            <!-- <h5 class="text-muted">Heading</h5> -->
+            <!-- <a href="#">Midterm question paper math - 2015 CBSE</a> -->
+            <!-- testing -->
+            <div class="table-responsive">
+              <table
+                id="example"
+                style="width: 100%"
+                class="table table-striped table-bordered"
+              >
+                <% if(papers.length >0){%>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% papers.forEach(paper=>{ %>
+                  <%-include('../includes/downloadTile.ejs',{paper:paper}) %> <%
+                  }); %>
+                </tbody>
+              </table>
+              <!-- testing -->
+              <% }else{ %>
+              <h3>No papers to show</h3>
+              <% } %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%} %>
+    <style>
+      /* Arrow Breadcrumb */
+      .breadcrumb-arrow .breadcrumb-item + .breadcrumb-item::before {
+        content: "";
+      }
+
+      .breadcrumb-arrow {
+        height: 40px;
+        line-height: 40px;
+      }
+
+      .breadcrumb-arrow .breadcrumb-item:first-child a {
+        border-radius: 4px 0 0 4px;
+      }
+
+      .breadcrumb-arrow .breadcrumb-item,
+      .breadcrumb-arrow .breadcrumb-item a,
+      .breadcrumb-arrow .breadcrumb-item span {
+        display: inline-block;
+        vertical-align: top;
+      }
+
+      .breadcrumb-arrow .breadcrumb-item:not(:first-child) {
+        margin-left: -1px;
+      }
+
+      .breadcrumb-arrow .breadcrumb-item + .breadcrumb-item:before {
+        padding: 0;
+        content: "";
+      }
+
+      .breadcrumb-arrow .breadcrumb-item a,
+      .breadcrumb-arrow .breadcrumb-item.active {
+        height: 40px;
+        padding: 0 10px 0 25px;
+        line-height: 40px;
+      }
+
+      .breadcrumb-arrow .breadcrumb-item a {
+        position: relative;
+        color: #fff;
+        text-decoration: none;
+        background-color: #3bafda;
+        border: 1px solid #3bafda;
+      }
+
+      .breadcrumb-arrow .breadcrumb-item a:after,
+      .breadcrumb-arrow .breadcrumb-item a:before {
+        position: absolute;
+        top: -1px;
+        width: 0;
+        height: 0;
+        content: "";
+        border-top: 20px solid transparent;
+        border-bottom: 20px solid transparent;
+      }
+
+      .breadcrumb-arrow .breadcrumb-item a:before {
+        right: -10px;
+        z-index: 3;
+        border-left-color: #3bafda;
+        border-left-style: solid;
+        border-left-width: 11px;
+      }
+
+      .breadcrumb-arrow .breadcrumb-item a:after {
+        right: -11px;
+        z-index: 2;
+        border-left: 11px solid #2494be;
+      }
+
+      .breadcrumb-arrow .breadcrumb-item a:focus,
+      .breadcrumb-arrow li a:hover {
+        background-color: #4fc1e9;
+        border: 1px solid #4fc1e9;
+      }
+
+      .breadcrumb-arrow .breadcrumb-item a:focus:before,
+      .breadcrumb-arrow li a:hover:before {
+        border-left-color: #4fc1e9;
+      }
+
+      .breadcrumb-arrow li.active:after,
+      .breadcrumb-arrow li.active:before {
+        border-left-color: #2494be;
+      }
+
+      #homeqp-math {
+        width: 75rem;
+        margin-top: 5%;
+        margin-left: 8%;
+      }
+
+      @media (max-width: 900px) {
+        #upload-form {
+          width: 40rem;
+          height: 20rem;
+          display: flex;
+          flex-direction: column;
+          background: rgba(255, 255, 255, 0.06);
+          box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+          border-radius: 30px;
+          border-left: 10px solid rgba(255, 255, 255, 0.3);
+          border-top: 1px solid rgba(255, 255, 255, 0.3);
+          margin-top: 200px;
+          margin-left: 5%;
+          margin-right: 5%;
+          position: relative;
+        }
+
+        input {
+          width: 80%;
+          margin: 5% auto;
+          margin-bottom: 8%;
+          border: none;
+          outline: none;
+          background: transparent;
+          color: black;
+          border-bottom: 1px solid rgba(4, 4, 4, 0.6);
+          opacity: 0.8;
+        }
+
+        #homeqp-math {
+          width: 40rem;
+          margin-left: 5%;
+          margin-right: 5%;
+        }
+      }
+    </style>
+
+    <script src="/js/main.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+      integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      window.addEventListener("scroll", function () {
+        if (window.scrollY > 1) {
+          document.getElementById("nav-bar").style.backgroundColor = "white";
+        } else if (window.scrollY < 1) {
+          document.getElementById("nav-bar").style.background = "transparent";
+        }
+      });
+    </script>
   </body>
 </html>

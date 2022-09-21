@@ -5,7 +5,9 @@ exports.getLoginPage = (req, res, next) => {
   res.render("auth/login");
 };
 exports.postLogin = (req, res, next) => {};
-exports.getSignUpPage = (req, res, next) => {};
+exports.getSignUpPage = (req, res, next) => {
+  res.render("auth/signup");
+};
 exports.getUserProfile = (req, res, next) => {};
 
 exports.getPaperById = (req, res, next) => {
@@ -22,26 +24,4 @@ exports.getPaperById = (req, res, next) => {
     });
 };
 
-exports.postUploadFile = (req, res, next) => {
-  console.log("Reahed PostUploadFile");
-  console.log(req.body);
-  const file = new File({
-    _id: new mongoose.Types.ObjectId(),
-    filename: req.body.filename,
-    subject: req.body.subject,
-  });
-  console.log("Saving file....");
-  file
-    .save()
-    .then((result) => {
-      console.log(result);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  console.log("File saved!");
-  res.status(201).json({
-    message: "Success",
-    createdFile: file,
-  });
-};
+exports.postUploadFile = (req, res, next) => {};
