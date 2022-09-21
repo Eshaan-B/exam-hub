@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const ObjectId = require("mongodb").ObjectId;
 const File = require("../models/file");
-const { json } = require("express");
+const checkExtension = require("../../utils/checkExtension");
 
 exports.getExplore = (req, res, next) => {
   res.render("explore");
@@ -31,7 +31,7 @@ exports.getOneById = async (req, res, next) => {
     console.log("File found");
     console.log(typeof doc[0].file);
     res
-      .setHeader("Content-disposition", `attachment; filename=${filename}.pdf`)
+      .setHeader("Content-disposition", `attachment; filename=${filename}`)
       .send(doc[0].file);
   } else {
     console.log("doc not found");
@@ -47,7 +47,11 @@ exports.getUploadOrDownload = async (req, res, next) => {
     if (papers.length == 0) console.log("no files to show");
     else console.log(`Length: ${papers.length}`);
   }
-  res.render("papers/uploadDownload", { mode: mode, papers: papers });
+  console.log(req.extensionError);
+  res.render("papers/uploadDownload", {
+    mode: mode,
+    papers: papers,
+  });
 };
 
 function savePaper(paperObject, paperEncoded) {
@@ -60,9 +64,19 @@ function savePaper(paperObject, paperEncoded) {
 
 exports.postUpload = (req, res, next) => {
   console.log("Reached PostUploadFile");
+  var filename = JSON.parse(req.body.paper).name;
+  const extension = checkExtension(filename);
+  if (extension == null) {
+    req.extensionError = "Invalid file. Kindly upload pdf only";
+    return res.status(301).render("error", {
+      errorMessage:
+        "Invalid file extension. Supported filetypes are: pdf, jpg, jpeg, png, doc, docx",
+    });
+  }
   const paper = new File({
     _id: new mongoose.Types.ObjectId(),
-    filename: "examhubTest",
+    type: extension,
+    filename: filename,
     subject: req.body.subject,
     class: req.body.class,
     board: req.body.board,
@@ -78,8 +92,9 @@ exports.postUpload = (req, res, next) => {
       console.log(err);
     });
   console.log("File saved!");
-  res.status(201).json({
-    message: "Success",
-    createdFile: paper,
-  });
+  res
+    .status(201)
+    .render("success", {
+      successMessage: "The file was uploaded successfully!",
+    });
 };
