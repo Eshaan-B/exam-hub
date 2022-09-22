@@ -4,6 +4,7 @@ const path = require("path");
 const ObjectId = require("mongodb").ObjectId;
 const File = require("../models/file");
 const checkExtension = require("../../utils/checkExtension");
+const savePaper = require("../../utils/savePaper");
 
 exports.getExplore = (req, res, next) => {
   res.render("explore");
@@ -54,16 +55,9 @@ exports.getUploadOrDownload = async (req, res, next) => {
   });
 };
 
-function savePaper(paperObject, paperEncoded) {
-  if (paperEncoded == null) return;
-  const paperUnencoded = JSON.parse(paperEncoded);
-  if (paperUnencoded != null) {
-    paperObject.file = new Buffer.from(paperUnencoded.data, "base64");
-  }
-}
-
 exports.postUpload = (req, res, next) => {
   console.log("Reached PostUploadFile");
+
   var filename = JSON.parse(req.body.paper).name;
   const extension = checkExtension(filename);
   if (extension == null) {
@@ -80,6 +74,7 @@ exports.postUpload = (req, res, next) => {
     subject: req.body.subject,
     class: req.body.class,
     board: req.body.board,
+    approved: false,
   });
   savePaper(paper, req.body.paper);
   console.log("Saving file....");
@@ -92,9 +87,7 @@ exports.postUpload = (req, res, next) => {
       console.log(err);
     });
   console.log("File saved!");
-  res
-    .status(201)
-    .render("success", {
-      successMessage: "The file was uploaded successfully!",
-    });
+  res.status(201).render("success", {
+    successMessage: "The file was uploaded successfully!",
+  });
 };
