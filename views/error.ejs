@@ -7,6 +7,7 @@
     <title>Error Page</title>
   </head>
   <body>
+    <%-include('includes/navbar.ejs',{mode: 'upload'}) %>
     <h1>An error occured</h1>
     <h5><%=errorMessage %></h5>
   </body>

@@ -68,12 +68,12 @@
       <!-- <button class="button2" id="about-button">Login</button> -->
 
       <form id="upload-details" method="POST" action="/explore/upload">
-        <select name="board" id="board-select">
+        <select name="board" id="board-select" required>
           <option value="">Board</option>
           <option value="CBSE">CBSE</option>
           <option value="SBoard">State Board</option>
         </select>
-        <select name="subject" id="subject-select">
+        <select name="subject" id="subject-select" required>
           <option value="">Subject</option>
           <option value="biology">Biology</option>
           <option value="math">Math</option>
@@ -82,7 +82,7 @@
           <option value="physics">Physics</option>
           <option value="chemistry">Chemistry</option>
         </select>
-        <select name="class" id="class-select">
+        <select name="class" id="class-select" required>
           <option value="">Class</option>
           <option value="six">VI</option>
           <option value="seven">VII</option>
@@ -99,6 +99,7 @@
           class="filepond"
           name="paper"
           accept="image/png, image/jpeg"
+          multiple
           required
         />
         <% } %>

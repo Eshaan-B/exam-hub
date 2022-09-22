@@ -1,5 +1,5 @@
 checkExtension = (filename) => {
-  const validExtensions = ["pdf", "jpg", "jpeg", "png", "doc", "docx"];
+  const validExtensions = ["pdf", "jpg", "jpeg", "png", "doc", "docx", "mp4"];
   var a = filename.split(".");
   if (a.length == 1 || (a[0] === "" && a.length === 2)) {
     return null;
