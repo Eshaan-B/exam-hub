@@ -6,23 +6,27 @@ const cors = require("cors");
 require("dotenv").config();
 const session = require("express-session");
 const mongoose = require("mongoose");
-const passportSetup = require("./config/passport-setup");
+const passport = require("passport");
+const passportSetup = require("./api/config/passport-setup");
 const userRoutes = require("./api/routes/userRoutes");
 const adminRoutes = require("./api/routes/adminRoutes");
 const errorController = require("./api/controllers/errorController");
 const siteRoutes = require("./api/routes/siteRoutes");
 const fileRoutes = require("./api/routes/fileRoutes");
 const file = require("./api/models/file");
-
+const cookieSession = require("cookie-session");
+require("dotenv").config();
 const app = express();
 app.use(
-  session({
-    secret: "keyboard cat",
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: true },
+  cookieSession({
+    maxAge: 24 * 60 * 60 * 1000,
+    keys: [process.env.COOKIE_KEY],
   })
 );
+//initialize passport
+app.use(passport.initialize());
+app.use(passport.session());
+
 mongoose.connect(
   "mongodb+srv://examHub:" +
     process.env.MONGO_ATLAS_PWD +

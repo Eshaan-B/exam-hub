@@ -10,16 +10,22 @@ router.get(
   "/loginGoogle",
   passport.authenticate("google", { scope: ["email", "profile"] })
 );
+//does serializing and stuff
 router.get(
   "/google/redirect",
   passport.authenticate("google"),
   (req, res, next) => {
-    res.send("Reached callback uri");
+    res.redirect("/explore?mode=download");
   }
 );
-router.get("/signup", userController.getSignUpPage);
+//================FACEBOOK======================================
+router.get("/loginFacebook", userController.getSignUpPage);
 
-router.get("/upload", (req, res, next) => {});
-router.post("/upload", userController.postUploadFile);
+//===============LOGOUT=============================
+
+router.get("/logout", (req, res, next) => {
+  req.logOut();
+  res.redirect("/");
+});
 
 module.exports = router;

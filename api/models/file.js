@@ -9,6 +9,7 @@ const fileSchema = mongoose.Schema({
   file: Buffer,
   type: String,
   approved: Boolean,
+  user: mongoose.Schema.Types.ObjectId,
 });
 
 module.exports = mongoose.model("File", fileSchema);

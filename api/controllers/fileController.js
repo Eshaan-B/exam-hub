@@ -3,8 +3,9 @@ const fs = require("fs");
 const path = require("path");
 const ObjectId = require("mongodb").ObjectId;
 const File = require("../models/file");
-const checkExtension = require("../../utils/checkExtension");
-const savePaper = require("../../utils/savePaper");
+const User = require("../models/user");
+const checkExtension = require("../utils/checkExtension");
+const savePaper = require("../utils/savePaper");
 
 exports.getExplore = (req, res, next) => {
   res.render("explore");
@@ -41,6 +42,7 @@ exports.getOneById = async (req, res, next) => {
 };
 
 exports.getUploadOrDownload = async (req, res, next) => {
+  console.log("User is: ", req.user.displayName);
   const mode = req.query.mode;
   let papers = [];
   if (mode === "download") {
@@ -75,7 +77,14 @@ exports.postUpload = (req, res, next) => {
     class: req.body.class,
     board: req.body.board,
     approved: false,
+    user: mongoose.Types.ObjectId(req.user._id),
   });
+  // User.updateOne({_id:req.user._id},(err,result)=>{
+  //   if(err) return err;
+  //   else{
+
+  //   }
+  // });
   savePaper(paper, req.body.paper);
   console.log("Saving file....");
   paper
