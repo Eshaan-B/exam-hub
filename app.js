@@ -4,10 +4,9 @@ const path = require("path");
 const morgan = require("morgan");
 const cors = require("cors");
 require("dotenv").config();
-const flash = require("connect-flash");
 const session = require("express-session");
 const mongoose = require("mongoose");
-
+const passportSetup = require("./config/passport-setup");
 const userRoutes = require("./api/routes/userRoutes");
 const adminRoutes = require("./api/routes/adminRoutes");
 const errorController = require("./api/controllers/errorController");
@@ -24,7 +23,6 @@ app.use(
     cookie: { secure: true },
   })
 );
-app.use(flash());
 mongoose.connect(
   "mongodb+srv://examHub:" +
     process.env.MONGO_ATLAS_PWD +
@@ -49,7 +47,7 @@ app.use(express.urlencoded({ extended: false, limit: "16mb" }));
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use(siteRoutes);
-app.use(userRoutes);
+app.use("/auth", userRoutes);
 app.use("/explore", fileRoutes);
 app.use("/admin", adminRoutes);
 app.use(errorController.get404);
