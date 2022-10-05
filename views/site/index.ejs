@@ -49,10 +49,16 @@
                 <a href="/about" class="button2" id="about-button">About</a>
               </li>
               <li class="nav-item">
+              <% if(user === null){%>
                 <a href="/auth/login" class="button2" id="contact-button"
                   >Login/SignUp</a
                 >
-              </li>
+                <% } else{%>
+                  <a href="/auth/profile" class="button2" id="contact-button"
+                  >My Profile</a
+                  <% } %> 
+                </li>
+
               <li>
                 <a href="/contact" class="button2" id="login-button">Contact</a>
               </li>

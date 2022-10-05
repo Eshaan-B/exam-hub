@@ -42,7 +42,7 @@ exports.getOneById = async (req, res, next) => {
 };
 
 exports.getUploadOrDownload = async (req, res, next) => {
-  console.log("User is: ", req.user.displayName);
+  console.log("User is: ", req.user);
   const mode = req.query.mode;
   let papers = [];
   if (mode === "download") {
@@ -69,6 +69,8 @@ exports.postUpload = (req, res, next) => {
         "Invalid file extension. Supported filetypes are: pdf, jpg, jpeg, png, doc, docx",
     });
   }
+  const f = new Buffer.from(JSON.parse(req.body.paper).data, "base64");
+
   const paper = new File({
     _id: new mongoose.Types.ObjectId(),
     type: extension,
@@ -78,14 +80,17 @@ exports.postUpload = (req, res, next) => {
     board: req.body.board,
     approved: false,
     user: mongoose.Types.ObjectId(req.user._id),
+    file: new Buffer.from(JSON.parse(req.body.paper).data, "base64"),
   });
-  // User.updateOne({_id:req.user._id},(err,result)=>{
-  //   if(err) return err;
-  //   else{
+  console.log(paper.file);
 
-  //   }
-  // });
-  savePaper(paper, req.body.paper);
+  User.updateOne({ _id: req.user._id }, (err, result) => {
+    if (err) return err;
+    else {
+    }
+  });
+  //savePaper(paper, req.body.paper);
+
   console.log("Saving file....");
   paper
     .save()

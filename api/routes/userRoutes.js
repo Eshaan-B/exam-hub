@@ -10,7 +10,7 @@ router.get(
   "/loginGoogle",
   passport.authenticate("google", { scope: ["email", "profile"] })
 );
-//does serializing and stuff
+//does serializing too
 router.get(
   "/google/redirect",
   passport.authenticate("google"),

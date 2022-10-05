@@ -1,5 +1,5 @@
 exports.getIndex = (req, res, next) => {
-  res.render("site/index");
+  res.render("site/index", { user: req.user });
 };
 
 exports.getContact = (req, res, next) => {

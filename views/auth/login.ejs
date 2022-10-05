@@ -34,7 +34,7 @@
       <nav class="navbar navbar-expand-lg fixed-top py-3" id="nav-bar">
         <div class="container">
           <div class="logo">
-            <a href="index.html">
+            <a href="/">
               <img src="/resources/logo.svg" alt="Exam Hub" />
             </a>
           </div>
@@ -75,7 +75,8 @@
     <h3>or</h3>
     <div id="social-login-buttons">
       <!-- <a href="/explore?mode=upload" class="button4" id="facebook-login-button" style="background-color:#4e9af1"><i class="fa-brands fa-facebook"></i>Login with Facebook</a> -->
-      <div class="fb-login-button" data-width="" data-size="large" id="facebook-login-button" data-button-type="continue_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false"></div>
+      <!-- <div class="fb-login-button" data-width="" data-size="large" id="facebook-login-button" data-button-type="continue_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false"></div> -->
+      <a href="/auth/loginGoogle" class="button4" id="facebook-login-button" style="background-color:#4267B2">Login with Facebook</a>
       <a href="/auth/loginGoogle" class="button4" id="gmail-login-button" style="background-color:#f14e4e">Login with Gmail</a>
       <!-- <div class="g-signin2" data-width="300" data-height="200" data-longtitle="true"></div> -->
       <!-- testing -->
@@ -107,11 +108,10 @@
     <style>
       #facebook-login-button {
         position: absolute;
-        margin-top: 0;
+        margin-top: 0px;
         margin-left: 10%;
-        width: 600px;
-        margin-bottom: 20px;
-        border-radius: 2em;
+        width: 235px;
+        border-radius: 0;
       }
       #gmail-login-button {
         position: absolute;

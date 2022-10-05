@@ -15,8 +15,8 @@ const router = express.Router();
 // const upload = multer({ storage: storage });
 
 router.get("/", authCheck, fileController.getUploadOrDownload);
-router.get("/getPaperById/:paperId", fileController.getOneById);
+router.get("/getPaperById/:paperId", authCheck, fileController.getOneById);
 
-router.post("/upload", fileController.postUpload);
+router.post("/upload", authCheck, fileController.postUpload);
 
 module.exports = router;
