@@ -40,6 +40,7 @@ passport.use(
           done(null, currentUser);
         } else {
           console.log("Doesn't exist");
+          console.log(profile);
           new User({
             _id: new mongoose.Types.ObjectId(),
             googleId: profile.id,

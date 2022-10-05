@@ -54,6 +54,7 @@ exports.getUploadOrDownload = async (req, res, next) => {
   res.render("papers/uploadDownload", {
     mode: mode,
     papers: papers,
+    user: req.user,
   });
 };
 
@@ -84,11 +85,12 @@ exports.postUpload = (req, res, next) => {
   });
   console.log(paper.file);
 
-  User.updateOne({ _id: req.user._id }, (err, result) => {
-    if (err) return err;
-    else {
-    }
-  });
+  // User.updateOne({ _id: req.user._id }, {papers : },(err, result) => {
+  //   if (err) return err;
+  //   else {
+
+  //   }
+  // });
   //savePaper(paper, req.body.paper);
 
   console.log("Saving file....");

@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get("/login", userController.getLoginPage);
 
-//==================GOOGLE====================================
+//==================GOOGLE====================================n
 router.get(
   "/loginGoogle",
   passport.authenticate("google", { scope: ["email", "profile"] })
@@ -27,5 +27,7 @@ router.get("/logout", (req, res, next) => {
   req.logOut();
   res.redirect("/");
 });
+
+router.get("/user/:userId", userController.getUserProfile);
 
 module.exports = router;
