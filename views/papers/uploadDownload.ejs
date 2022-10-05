@@ -96,7 +96,7 @@
     </div> -->
 
     <div action="" id="upload-form">
-      <h1 id="greetings">Hey, User</h1>
+      <h1 id="greetings">Hey, <%=user.displayName.split(" ")[0] %> </h1>
       <!-- <a class="button" id="login-form-button">Login</a> -->
       <!-- <button class="button2" id="about-button">Login</button> -->
 
@@ -275,6 +275,7 @@
       }
       #upload-details {
         margin-left: 7%;
+        height: auto;
       }
       /* .filepond--item {
           width: calc(50% - 0.5em);
@@ -430,7 +431,7 @@
       @media (max-width: 900px) {
         #upload-form {
           width: 40rem;
-          height: 20rem;
+          height: auto;
           display: flex;
           flex-direction: column;
           background: rgba(255, 255, 255, 0.06);

@@ -16,7 +16,7 @@ document.addEventListener("FilePond:addfile", (e) => {
   console.log("addinggg");
   // get create method reference
   const { create } = e.detail;
-  document.getElementById("upload-form").style.height = `${height + 20}rem`;
+  document.getElementById("upload-detail").style.height = `auto`;
 });
 
 FilePond.parse(document.body);
