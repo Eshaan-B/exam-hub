@@ -23,7 +23,7 @@ exports.getUserProfile = async (req, res, next) => {
     res.redirect("/");
   }
 
-  res.render("auth/profile", { user: user });
+  res.render("auth/profile", { mode: null, user: user });
 };
 
 exports.postUploadFile = (req, res, next) => {};
