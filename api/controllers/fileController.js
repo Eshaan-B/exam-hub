@@ -6,6 +6,7 @@ const File = require("../models/file");
 const User = require("../models/user");
 const checkExtension = require("../utils/checkExtension");
 const savePaper = require("../utils/savePaper");
+const file = require("../models/file");
 
 exports.getExplore = (req, res, next) => {
   res.render("explore");
@@ -23,6 +24,12 @@ async function getAllFiles() {
   //  console.log(docs[1]["file"]);
   //Download it like this:
   return docs;
+}
+
+async function getUserById(userId) {
+  const doc = await User.find({ _id: userId });
+  if (doc != null) return doc[0];
+  console.log("User not found");
 }
 
 exports.getOneById = async (req, res, next) => {
@@ -58,52 +65,72 @@ exports.getUploadOrDownload = async (req, res, next) => {
   });
 };
 
-exports.postUpload = (req, res, next) => {
+exports.postUpload = async (req, res, next) => {
   console.log("Reached PostUploadFile");
-
-  var filename = JSON.parse(req.body.paper).name;
-  const extension = checkExtension(filename);
-  if (extension == null) {
-    req.extensionError = "Invalid file. Kindly upload pdf only";
-    return res.status(301).render("error", {
-      errorMessage:
-        "Invalid file extension. Supported filetypes are: pdf, jpg, jpeg, png, doc, docx",
+  const filesBuffer = [];
+  if (typeof req.body.paper === "string") {
+    filesBuffer.push(
+      new Buffer.from(JSON.parse(req.body.paper).data, "base64")
+    );
+  } else {
+    let papersJSON = req.body.paper;
+    papersJSON.forEach((paper) => {
+      let buff = new Buffer.from(JSON.parse(paper).data, "base64");
+      filesBuffer.push(buff);
     });
   }
-  const f = new Buffer.from(JSON.parse(req.body.paper).data, "base64");
-
+  var filename =
+    filesBuffer.length == 1 ? JSON.parse(req.body.paper).name : "Doc";
+  //const extension = checkExtension(filename);
+  // if (extension == null) {
+  //   req.extensionError = "Invalid file. Kindly upload pdf only";
+  //   return res.status(301).render("error", {
+  //     errorMessage:
+  //       "Invalid file extension. Supported filetypes are: pdf, jpg, jpeg, png, doc, docx",
+  //   });
+  // }
   const paper = new File({
     _id: new mongoose.Types.ObjectId(),
-    type: extension,
+    type: "tbd",
     filename: filename,
     subject: req.body.subject,
     class: req.body.class,
     board: req.body.board,
     approved: false,
     user: mongoose.Types.ObjectId(req.user._id),
-    file: new Buffer.from(JSON.parse(req.body.paper).data, "base64"),
+    files: filesBuffer,
   });
-  console.log(paper.file);
-
-  // User.updateOne({ _id: req.user._id }, {papers : },(err, result) => {
-  //   if (err) return err;
-  //   else {
-
-  //   }
-  // });
-  //savePaper(paper, req.body.paper);
+  //Updating changes to user
+  const user = await getUserById(req.user._id);
+  console.log("User is: ", user);
+  const userUploads = [...user.uploads];
+  userUploads.push(paper._id);
+  await User.updateOne(
+    { _id: req.user.id },
+    { uploads: userUploads },
+    (err, docs) => {
+      if (err) {
+        console.log("Error while updating user: ", err);
+      } else console.log("User updated successfully");
+    }
+  )
+    .clone()
+    .catch((err) => {
+      console.log("Error while updating user: ", err);
+    });
 
   console.log("Saving file....");
-  paper
+  await paper
     .save()
     .then((result) => {
       //console.log(result);
+      console.log("File saved!");
     })
     .catch((err) => {
-      console.log(err);
+      console.log("Error in saving paper: ", err);
     });
-  console.log("File saved!");
   res.status(201).render("success", {
     successMessage: "The file was uploaded successfully!",
+    user: req.user,
   });
 };

@@ -6,7 +6,7 @@ const fileSchema = mongoose.Schema({
   subject: String,
   board: String,
   class: String,
-  file: Buffer,
+  files: [Buffer],
   type: String,
   approved: Boolean,
   user: mongoose.Schema.Types.ObjectId,

@@ -47,6 +47,7 @@ passport.use(
             email: profile.emails[0].value,
             displayName: profile.displayName,
             profilePicture: profile.photos[0].value,
+            uploads: [],
           })
             .save()
             .then((newUser) => {
