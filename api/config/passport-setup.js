@@ -1,4 +1,4 @@
-//require("dotenv").config();
+if (process.env.NODE_ENV != "PRODUCTION") require("dotenv").config();
 const mongoose = require("mongoose");
 const passport = require("passport");
 const oauth = require("passport-google-oauth20");

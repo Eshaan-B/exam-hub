@@ -3,7 +3,7 @@ const express = require("express");
 const path = require("path");
 //const morgan = require("morgan");
 const cors = require("cors");
-//require("dotenv").config();
+if (process.env.NODE_ENV != "PRODUCTION") require("dotenv").config();
 const session = require("express-session");
 const mongoose = require("mongoose");
 const passport = require("passport");

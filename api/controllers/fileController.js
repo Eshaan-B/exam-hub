@@ -38,10 +38,15 @@ exports.getOneById = async (req, res, next) => {
   const filename = await doc[0]["filename"];
   if (doc != null) {
     console.log("File found");
-    console.log(typeof doc[0].file);
-    res
-      .setHeader("Content-disposition", `attachment; filename=${filename}`)
-      .send(doc[0].file);
+    res.setHeader("Content-disposition", `attachment; filename=${filename}`);
+    let splitFileName = filename.split(" ");
+    if (splitFileName === "Doc") {
+      res.send(doc[0].files[splitFileName[1]]);
+    } else {
+      res
+        .setHeader("Content-disposition", `attachment; filename=${filename}`)
+        .send(doc[0].files[0]);
+    }
   } else {
     console.log("doc not found");
     res.redirect("/");
