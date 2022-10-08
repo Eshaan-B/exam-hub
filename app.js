@@ -3,7 +3,7 @@ const express = require("express");
 const path = require("path");
 //const morgan = require("morgan");
 const cors = require("cors");
-require("dotenv").config();
+//require("dotenv").config();
 const session = require("express-session");
 const mongoose = require("mongoose");
 const passport = require("passport");
@@ -15,12 +15,11 @@ const siteRoutes = require("./api/routes/siteRoutes");
 const fileRoutes = require("./api/routes/fileRoutes");
 const file = require("./api/models/file");
 const cookieSession = require("cookie-session");
-require("dotenv").config();
 const app = express();
 app.use(
   cookieSession({
     maxAge: 24 * 60 * 60 * 1000,
-    keys: [process.env.COOKIE_KEY],
+    keys: ["EXAMHUBDEV"],
   })
 );
 //initialize passport
