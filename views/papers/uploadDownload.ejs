@@ -98,11 +98,12 @@
       <!-- <button class="button2" id="about-button">Login</button> -->
 
       <form id="upload-details" method="POST" action="/explore/upload">
-        <select list="board" name="board" id="board-select" required>
-          <option value="">Board</option>
-          <option value="CBSE">CBSE</option>
-          <option value="State Board">State Board</option>
-          </select>
+        <input list="browsers" name="browser" id="browser">
+        <datalist list="board" name="board" id="board-select" required>
+          <!-- <option value="">Board</option> -->
+          <option value="CBSE">
+          <option value="State Board">
+        </datalist>
         <select list="subjects" name="subject" id="subject-select" required />
           <option value="">Subject</option>
           <option value="Biology">Biology</option>
