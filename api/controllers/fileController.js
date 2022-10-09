@@ -17,7 +17,7 @@ async function getByFilter(req) {}
 async function getAllFiles() {
   var docs = null;
   try {
-    docs = await File.find({});
+    docs = await File.find({ approved: true });
     console.log("Fetched files successfully");
   } catch (err) {
     console.log(`Error occured while fetching files.... ${err}`);
