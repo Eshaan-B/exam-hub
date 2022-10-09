@@ -1,8 +1,15 @@
 <tr>
   <td>
+    <% console.log("Number of files: ",paper.files.length) %> <%
+    <%if(paper.files.length == 1){%>
     <a href="/explore/getPaperById/<%=paper._id.toString()%> "
       ><%=paper.filename%>
     </a>
+    <% }else{ for(let i=1;i<=paper.files.length;i++){%>
+    <a href="/explore/getPaperById/<%=paper._id.toString()%> "
+      ><%=paper.filename`%>
+    </a>
+    <% } %>
   </td>
   <td>April 2015</td>
 </tr>

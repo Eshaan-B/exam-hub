@@ -30,7 +30,7 @@
 
     <link
       rel="shortcut icon"
-      href="/resources/favicon.png"
+      href="/favicon.png"
       type="image/x-icon"
     />
     <link rel="stylesheet" href="/css/userhome.css" />
@@ -45,10 +45,7 @@
       src="https://kit.fontawesome.com/551e46de4a.js"
       crossorigin="anonymous"
     ></script>
-    <script defer src="/js/autocomplete"></script>
-    <script defer>
-      autocomplete(document.getElementById("myInput"), countries);
-    </script>
+   
     <script src="/js/main.js"></script>
     <script defer src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script
@@ -125,7 +122,13 @@
           <option value="eleven">XI</option>
           <option value="twelve">XII</option>
           </select>
+          <button type="submit" class="btn btn-success">
+            <% if(mode === 'upload'){%>Upload<%}else{%>Search<% } %>
+          </button>
         <% if(mode ==='upload'){%>
+          <br>
+          <br>
+          <br>
         <input
           type="file"
           id="question-paper-upload"
@@ -136,9 +139,7 @@
           required
         />
         <% } %>
-        <button type="submit" class="btn btn-success">
-          <% if(mode === 'upload'){%>Upload<%}else{%>Search<% } %>
-        </button>
+        
       </form>
     </div>
 
@@ -223,7 +224,7 @@
 
       #upload-form {
         width: 75rem;
-        height: 30rem;
+        height: 15rem;
         display: flex;
         flex-direction: column;
         background: rgba(255, 255, 255, 0.06);
@@ -290,16 +291,16 @@
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb breadcrumb-arrow p-0">
                 <li class="breadcrumb-item">
-                  <a href="#" class="text-uppercase pl-3">CBSE</a>
+                  <a href="#" class="text-uppercase pl-3"><%=board %> </a>
                 </li>
                 <li class="breadcrumb-item pl-0">
-                  <a href="#" class="text-uppercase">Math</a>
+                  <a href="#" class="text-uppercase"><%=subject %> </a>
                 </li>
                 <li
                   aria-current="page"
                   class="breadcrumb-item pl-0 active text-uppercase pl-4"
                 >
-                  XII
+                 <%=grade %> 
                 </li>
               </ol>
             </nav>
@@ -320,9 +321,22 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <% papers.forEach(paper=>{ %>
-                  <%-include('../includes/downloadTile.ejs',{paper:paper}) %> <%
-                  }); %>
+                  <% papers.forEach((paper)=>{ %> 
+                  <tr>
+                    <td>
+                      <% if(paper.files.length == 1){%> 
+                      <a href="/explore/getPaperById/<%=paper._id.toString()%> "
+                        ><%=paper.filename%>
+                      </a>
+                      <% }else{%>
+                        <% for(let i=1;i<=paper.files.length;i++){ %> 
+                        <a href="/explore/getOneOfBatch/<%=i%> "><%=paper.filename %> <%=i %>, </a>
+                        <% }} %> 
+                    </td>
+                    <td>April 2015</td>
+                  </tr>
+
+                  <% }); %> 
                 </tbody>
               </table>
               <!-- testing -->

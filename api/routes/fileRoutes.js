@@ -16,6 +16,7 @@ const router = express.Router();
 
 router.get("/", authCheck, fileController.getUploadOrDownload);
 router.get("/getPaperById/:paperId", authCheck, fileController.getOneById);
+router.get("/getOneOfBatch/:index", authCheck, fileController.getOneOfBatch);
 
 router.post("/upload", authCheck, fileController.postUpload);
 

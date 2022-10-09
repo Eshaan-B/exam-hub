@@ -12,6 +12,8 @@ exports.getExplore = (req, res, next) => {
   res.render("explore");
 };
 
+async function getByFilter(req) {}
+
 async function getAllFiles() {
   var docs = null;
   try {
@@ -31,6 +33,10 @@ async function getUserById(userId) {
   if (doc != null) return doc[0];
   console.log("User not found");
 }
+
+exports.getOneOfBatch = async (req, res, next) => {
+  res.send(`Sending ${req.params.index}`);
+};
 
 exports.getOneById = async (req, res, next) => {
   const paperId = new ObjectId(req.params.paperId);
@@ -62,11 +68,13 @@ exports.getUploadOrDownload = async (req, res, next) => {
     if (papers.length == 0) console.log("no files to show");
     else console.log(`Length: ${papers.length}`);
   }
-  console.log(req.extensionError);
   res.render("papers/uploadDownload", {
     mode: mode,
     papers: papers,
     user: req.user,
+    grade: "XII",
+    board: req.body.board,
+    subject: "Math",
   });
 };
 
