@@ -330,12 +330,11 @@
                       </a>
                       <% }else{%>
                         <% for(let i=1;i<=paper.files.length;i++){ %> 
-                        <a href="/explore/getOneOfBatch/<%=i%> "><%=paper.filename %> <%=i %>, </a>
+                        <a href="/explore/getOneOfBatch/<%=i%> "><%=paper.filename %> <%=i %><% if(i!=paper.files.length){%>,<% } %>  </a>
                         <% }} %> 
                     </td>
                     <td>April 2015</td>
                   </tr>
-
                   <% }); %> 
                 </tbody>
               </table>

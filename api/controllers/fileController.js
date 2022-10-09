@@ -35,7 +35,17 @@ async function getUserById(userId) {
 }
 
 exports.getOneOfBatch = async (req, res, next) => {
-  res.send(`Sending ${req.params.index}`);
+  const paperId = new ObjectId(req.params.paperId);
+  const doc = await File.find({ _id: paperId });
+  const filename = "Doc";
+  if (doc != null) {
+    res
+      .setHeader("Content-disposition", `attachment; filename=${filename}`)
+      .send(doc[0]);
+  } else {
+    console.log("Doc not found");
+    res.redirect("/");
+  }
 };
 
 exports.getOneById = async (req, res, next) => {
@@ -44,7 +54,7 @@ exports.getOneById = async (req, res, next) => {
   const filename = await doc[0]["filename"];
   if (doc != null) {
     console.log("File found");
-    res.setHeader("Content-disposition", `attachment; filename=${filename}`);
+    //  res.setHeader("Content-disposition", `attachment; filename=${filename}`);
     let splitFileName = filename.split(" ");
     if (splitFileName === "Doc") {
       res.send(doc[0].files[splitFileName[1]]);
