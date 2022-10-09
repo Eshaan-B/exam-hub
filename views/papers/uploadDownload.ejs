@@ -98,31 +98,31 @@
       <!-- <button class="button2" id="about-button">Login</button> -->
 
       <form id="upload-details" method="POST" action="/explore/upload">
-        <input list="browsers" name="browser" id="browser">
-        <datalist list="board" name="board" id="board-select" required>
-          <!-- <option value="">Board</option> -->
+        <!-- <input list="browsers" name="browser" id="browser"> -->
+        <input list="board-select" id="board-selector" name="board-selected" placeholder="Select Board">
+        <datalist id="board-select" required>
           <option value="CBSE">
           <option value="State Board">
         </datalist>
-        <select list="subjects" name="subject" id="subject-select" required />
-          <option value="">Subject</option>
-          <option value="Biology">Biology</option>
-          <option value="Math">Math</option>
-          <option value="English">English</option>
-          <option value="Computer">Computer Science</option>
-          <option value="Physics">Physics</option>
-          <option value="Chemistry">Chemistry</option>
-        </select> 
-        <select list="grade" name="class" id="class-select" required />
-          <option selected>Class</option>
-          <option value="Six">VI</option>
-          <option value="seven">VII</option>
-          <option value="eight">VIII</option>
-          <option value="nine">IX</option>
-          <option value="ten">X</option>
-          <option value="eleven">XI</option>
-          <option value="twelve">XII</option>
-          </select>
+        <input list="subject-select" id="subject-selector" name="subject-selected" placeholder="Select Subject">
+        <datalist id="subject-select" required />
+          <option value="Biology">
+          <option value="Math">
+          <option value="English">
+          <option value="Computer">
+          <option value="Physics">
+          <option value="Chemistry">
+        </datalist> 
+        <input list="class-select" id="class-selector" name="class-selected" placeholder="Select Class">
+        <datalist id="class-select" required />
+          <option value="VI">
+          <option value="VII">
+          <option value="VIII">
+          <option value="IX">
+          <option value="X">
+          <option value="XI">
+          <option value="XII">
+        </datalist>
           <button type="submit" class="btn btn-success">
             <% if(mode === 'upload'){%>Upload<%}else{%>Search<% } %>
           </button>
@@ -145,14 +145,41 @@
     </div>
 
     <style>
+      #board-selector {
+        width: 15rem !important;
+        box-sizing: border-box;
+        border: 1.5px solid black;
+      }
+      #subject-selector {
+        margin-left: 40px;
+        width: 15rem !important;
+        box-sizing: border-box;
+        border: 1.5px solid black;
+      }
+      #class-selector {
+        margin-left: 40px;
+        width: 15rem !important;
+        box-sizing: border-box;
+        border: 1.5px solid black;
+        margin-right: 20px;
+      }
       @media (max-width: 700px) {
         #upload-form {
           width: 26rem !important;
-          height: 15rem !important;
+          height: 22rem !important;
         }
         #upload-details {
           display: block;
           width: 20rem; 
+        }
+        #board-selector{
+          margin-left: 0px;
+        }
+        #subject-selector{
+          margin-left: 0px;
+        }
+        #class-selector {
+          margin-left: 0px;
         }
         #homeqp-math {
           width: 26rem !important;

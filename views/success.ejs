@@ -28,8 +28,27 @@
   <body>
     <%-include('includes/navbar.ejs',{mode: 'upload'}) %>
     <h4><%=successMessage %></h4>
-    <h4>Thank you for contributing!</h4>
+    <p>Thank you for contributing!</p>
+    <style>
+      h4{
+        margin-top: 15%;
+        margin-left: 40%;
+      }
+      p{
+        margin-left: 45%;
+      }
+      @media (max-width: 700px) {
+        h4 {
+          margin-top: 60%;
+          margin-left: 12%;
+        }
+        p {
+          margin-left: 30%;
+        }
+      }
+    </style>
     <script src="/js/main.js"></script>
+    <script src="node_modules/confetti-js/dist/index.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script
       src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
