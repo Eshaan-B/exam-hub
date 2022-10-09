@@ -130,7 +130,11 @@ a.button2 {
   transition: all 0.2s;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 700px) {
+  #nav-bar {
+    background-color: white;
+  }
+
   #navbarSupportedContent {
     text-align: right;
     background-color: white;
@@ -141,6 +145,18 @@ a.button2 {
     padding-left: 35px;
     padding-right: 36px;
   }
+
+  #login-form {
+    position: absolute;
+    margin-top: 50%;
+    margin-left: 60%;
+  }
+
+  /* #gamil-login-button {
+    position: relative;
+    margin-top: 10%;
+    margin-left: 20%;
+  } */
 
   #contact-button {
     margin-right: 15px;
