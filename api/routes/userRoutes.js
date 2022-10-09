@@ -5,10 +5,6 @@ const router = express.Router();
 
 router.get("/login", userController.getLoginPage);
 
-router.get("/admin", (req, res, next) => {
-  res.render("auth/admin");
-});
-
 //==================GOOGLE====================================n
 router.get(
   "/loginGoogle",
