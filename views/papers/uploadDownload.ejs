@@ -97,15 +97,15 @@
       <!-- <a class="button" id="login-form-button">Login</a> -->
       <!-- <button class="button2" id="about-button">Login</button> -->
 
-      <form id="upload-details" method="POST" action="/explore/upload">
+      <form id="upload-details" method="post" action="<%if(mode=='upload'){%>/explore/upload<%}else{%>/explore?mode=download<% } %>  ">
         <!-- <input list="browsers" name="browser" id="browser"> -->
-        <input list="board-select" id="board-selector" name="board-selected" placeholder="Select Board">
-        <datalist id="board-select" required>
+        <input list="board-select" id="board-selector" name="board" placeholder="Select Board" required>
+        <datalist id="board-select" >
           <option value="CBSE">
           <option value="State Board">
         </datalist>
-        <input list="subject-select" id="subject-selector" name="subject-selected" placeholder="Select Subject">
-        <datalist id="subject-select" required />
+        <input list="subject-select" id="subject-selector" name="subject" placeholder="Select Subject" required>
+        <datalist id="subject-select"  />
           <option value="Biology">
           <option value="Math">
           <option value="English">
@@ -113,8 +113,8 @@
           <option value="Physics">
           <option value="Chemistry">
         </datalist> 
-        <input list="class-select" id="class-selector" name="class-selected" placeholder="Select Class">
-        <datalist id="class-select" required />
+        <input list="class-select" id="class-selector" name="grade" placeholder="Select Class" required>
+        <datalist id="class-select"  />
           <option value="VI">
           <option value="VII">
           <option value="VIII">
@@ -137,7 +137,7 @@
           name="paper"
           accept="image/png, image/jpeg"
           multiple
-          required
+          
         />
         <% } %>
         

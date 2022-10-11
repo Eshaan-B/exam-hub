@@ -5,7 +5,7 @@ const fileSchema = mongoose.Schema({
   filename: String,
   subject: String,
   board: String,
-  class: String,
+  grade: String,
   files: [Buffer],
   type: String,
   approved: Boolean,

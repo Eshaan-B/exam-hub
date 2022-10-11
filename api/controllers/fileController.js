@@ -14,17 +14,27 @@ exports.getExplore = (req, res, next) => {
 
 async function getByFilter(req) {}
 
-async function getAllFiles() {
+async function getAllFiles(filters) {
   var docs = null;
   try {
-    docs = await File.find({ approved: true });
+    docs = await File.find(filters);
     console.log("Fetched files successfully");
   } catch (err) {
     console.log(`Error occured while fetching files.... ${err}`);
   }
 
-  //  console.log(docs[1]["file"]);
+  //console.log(docs[1]["file"]);
   //Download it like this:
+  return docs;
+}
+async function getPaperByFilters(filters) {
+  let docs = null;
+  try {
+    docs = await File.find(filters);
+    console.log("Fetched files successfully");
+  } catch (err) {
+    console.log("Error while fetching filtered files");
+  }
   return docs;
 }
 
@@ -70,13 +80,14 @@ exports.getOneById = async (req, res, next) => {
 };
 
 exports.getUploadOrDownload = async (req, res, next) => {
-  console.log("User is: ", req.user);
+  let filters = req.body;
   const mode = req.query.mode;
   let papers = [];
   if (mode === "download") {
-    papers = await getAllFiles();
+    filters.approved = true;
+    console.log("Filters are: ", filters);
+    papers = await getAllFiles(filters);
     if (papers.length == 0) console.log("no files to show");
-    else console.log(`Length: ${papers.length}`);
   }
   res.render("papers/uploadDownload", {
     mode: mode,
@@ -84,7 +95,8 @@ exports.getUploadOrDownload = async (req, res, next) => {
     user: req.user,
     grade: "XII",
     board: req.body.board,
-    subject: "Math",
+    subject: req.body.subject,
+    grade: req.body.grade,
   });
 };
 
@@ -112,12 +124,18 @@ exports.postUpload = async (req, res, next) => {
   //       "Invalid file extension. Supported filetypes are: pdf, jpg, jpeg, png, doc, docx",
   //   });
   // }
+
+  // const subject = req.body.subject;
+  // const grade = req.body.grade;
+  // const board = req.body.board;
+  // console.log(subject, grade, board);
+  console.log("Sending response...");
   const paper = new File({
     _id: new mongoose.Types.ObjectId(),
     type: "tbd",
     filename: filename,
     subject: req.body.subject,
-    class: req.body.class,
+    grade: req.body.grade,
     board: req.body.board,
     approved: false,
     user: mongoose.Types.ObjectId(req.user._id),
