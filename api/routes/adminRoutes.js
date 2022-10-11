@@ -15,15 +15,16 @@ router.get("/approve/:paperId", async (req, res, next) => {
     .catch((err) => {
       console.log("Error while updating user: ", err);
     });
-  res.redirect("/");
+  res.redirect("/admin");
 });
 router.get("/deny/:paperId", async (req, res, next) => {
   const paperId = req.params.paperId;
-  await File.updateOne({ _id: paperId }, { approved: false }, (err, docs) => {
-    if (err) {
-      console.log("Error while approving file: ", err);
-    } else console.log("File approved successfully");
-  });
+  try {
+    await File.deleteOne({ _id: paperId });
+  } catch (err) {
+    console.log("Error while deleting: ", err);
+  }
+  res.redirect("/admin");
 });
 
 module.exports = router;
