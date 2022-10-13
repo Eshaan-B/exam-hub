@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/psied/ExamHub#readme",
   "dependencies": {
+    "confetti-js": "^0.0.18",
     "connect-flash": "^0.1.1",
     "cookie-session": "^2.0.0",
     "cors": "^2.8.5",
