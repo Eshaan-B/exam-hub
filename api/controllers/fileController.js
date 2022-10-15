@@ -13,7 +13,6 @@ exports.getExplore = (req, res, next) => {
 };
 
 async function getByFilter(req) {}
-
 async function getAllFiles(filters) {
   var docs = null;
   try {
@@ -27,22 +26,15 @@ async function getAllFiles(filters) {
   //Download it like this:
   return docs;
 }
-async function getPaperByFilters(filters) {
-  let docs = null;
-  try {
-    docs = await File.find(filters);
-    console.log("Fetched files successfully");
-  } catch (err) {
-    console.log("Error while fetching filtered files");
-  }
-  return docs;
-}
 
 async function getUserById(userId) {
   const doc = await User.find({ _id: userId });
   if (doc != null) return doc[0];
   console.log("User not found");
 }
+exports.getExplore = (req, res, next) => {
+  res.render("explore");
+};
 
 exports.getOneOfBatch = async (req, res, next) => {
   const paperId = new ObjectId(req.params.paperId);
@@ -61,7 +53,9 @@ exports.getOneOfBatch = async (req, res, next) => {
 exports.getOneById = async (req, res, next) => {
   const paperId = new ObjectId(req.params.paperId);
   const doc = await File.find({ _id: paperId });
+
   const filename = await doc[0]["filename"];
+
   if (doc != null) {
     console.log("File found");
     //  res.setHeader("Content-disposition", `attachment; filename=${filename}`);
@@ -103,6 +97,8 @@ exports.getUploadOrDownload = async (req, res, next) => {
 exports.postUpload = async (req, res, next) => {
   console.log("Reached PostUploadFile");
   const filesBuffer = [];
+  //multiple images
+
   if (typeof req.body.paper === "string") {
     filesBuffer.push(
       new Buffer.from(JSON.parse(req.body.paper).data, "base64")
@@ -116,7 +112,8 @@ exports.postUpload = async (req, res, next) => {
   }
   var filename =
     filesBuffer.length == 1 ? JSON.parse(req.body.paper).name : "Doc";
-  //const extension = checkExtension(filename);
+
+  const extension = checkExtension(filename);
   // if (extension == null) {
   //   req.extensionError = "Invalid file. Kindly upload pdf only";
   //   return res.status(301).render("error", {
