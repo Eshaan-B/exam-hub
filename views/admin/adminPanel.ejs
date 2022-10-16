@@ -75,14 +75,36 @@
       <table class="table">
         <thead>
           <th scope="col" class="col-3">File Name</th>
-          <th scope="col" class="col-3">Username</th>
+          <th scope="col" class="col-3">User ID</th>
           <th scope="col" class="col-3">Time</th>
           <th scope="col" class="col-3">Approve/Deny</th>
         </thead>
         <tbody>
           <% papers.forEach((paper)=>{%>
-          <%-include('../includes/adminTile.ejs',{filename:paper.filename,
-          user:paper.user, time:"2020",id: paper.id})%> <% }); %>
+          <tr>
+            <td class="col-3">
+              <a href="/explore/getPaperById/<%=paper.id.toString()%>">
+                <%=paper.filename %></a
+              >
+            </td>
+            <td class="col-3"><%=paper.user %></td>
+            <td class="col-3">2020</td>
+            <td>
+              <a
+                href="/admin/approve/<%=paper.id %> "
+                class="button4"
+                style="background-color: #5bb318"
+                >✓</a
+              >
+              <a
+                href="/admin/deny/<%=paper.id %> "
+                class="button4"
+                style="background-color: #e64848"
+                >X</a
+              >
+            </td>
+          </tr>
+          <% }); %>
         </tbody>
       </table>
     </div>

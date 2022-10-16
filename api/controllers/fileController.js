@@ -6,7 +6,9 @@ const File = require("../models/file");
 const User = require("../models/user");
 const checkExtension = require("../utils/checkExtension");
 const savePaper = require("../utils/savePaper");
+const { merge } = require("merge-pdf-buffers");
 const file = require("../models/file");
+const Canvas = require("canvas");
 
 exports.getExplore = (req, res, next) => {
   res.render("explore");
@@ -97,23 +99,58 @@ exports.getUploadOrDownload = async (req, res, next) => {
 exports.postUpload = async (req, res, next) => {
   console.log("Reached PostUploadFile");
   const filesBuffer = [];
-  //multiple images
-
+  let fileType;
+  var multipleFilesName = "";
+  const pdfBuffers = [];
+  let filename = "";
+  //single file upload
   if (typeof req.body.paper === "string") {
+    console.log("Single file upload");
+
+    filename = JSON.parse(req.body.paper).name;
     filesBuffer.push(
       new Buffer.from(JSON.parse(req.body.paper).data, "base64")
     );
+    fileType = JSON.parse(req.body.paper).type;
   } else {
+    //MULTI FILE UPLOAD
+    console.log("Reached mutiple file upload");
+    fileType = "pdf";
     let papersJSON = req.body.paper;
-    papersJSON.forEach((paper) => {
-      let buff = new Buffer.from(JSON.parse(paper).data, "base64");
-      filesBuffer.push(buff);
-    });
-  }
-  var filename =
-    filesBuffer.length == 1 ? JSON.parse(req.body.paper).name : "Doc";
+    papersJSON.forEach((myPaper) => {
+      if (multipleFilesName === "") {
+        console.log("Paper name: ", JSON.parse(myPaper).name);
+        multipleFilesName = JSON.parse(myPaper).name;
+        multipleFilesName = multipleFilesName.split(".")[0] + ".pdf";
+        console.log("New multipleFilesName: ", multipleFilesName);
+      }
 
-  const extension = checkExtension(filename);
+      //logic to convert image buffer to pdf buffer
+      const img = new Canvas.Image();
+      img.src = Buffer.from(JSON.parse(myPaper).data, "base64");
+      const canvas = Canvas.createCanvas(img.width, img.height, "pdf");
+      const context = canvas.getContext("2d");
+      img.onload = function () {
+        context.drawImage(img, 0, 0, img.width, img.height);
+      };
+      pdfBuffers.push(canvas.toBuffer());
+      // let buff = new Buffer.from(JSON.parse(paper).data, "base64");
+      // filesBuffer.push(buff);
+      console.log("Converting to pdf...");
+    });
+    let merged;
+    if (pdfBuffers.length > 0) {
+      console.log("Merging pdfs.....");
+      merged = await merge(pdfBuffers);
+      filesBuffer.push(merged);
+    }
+  }
+  // var filename =
+  //   filesBuffer.length == 1
+  //     ? JSON.parse(req.body.paper).name
+  //     : multipleFilesName;
+
+  // const extension = checkExtension(filename);
   // if (extension == null) {
   //   req.extensionError = "Invalid file. Kindly upload pdf only";
   //   return res.status(301).render("error", {
@@ -126,11 +163,13 @@ exports.postUpload = async (req, res, next) => {
   // const grade = req.body.grade;
   // const board = req.body.board;
   // console.log(subject, grade, board);
-  console.log("Sending response...");
+  console.log("Single filename set to: ", filename);
+  console.log("Multiple filename set to: ", multipleFilesName);
+
   const paper = new File({
     _id: new mongoose.Types.ObjectId(),
-    type: "tbd",
-    filename: filename,
+    type: fileType,
+    filename: filename === "" ? multipleFilesName : filename,
     subject: req.body.subject,
     grade: req.body.grade,
     board: req.body.board,
@@ -140,7 +179,7 @@ exports.postUpload = async (req, res, next) => {
   });
   //Updating changes to user
   const user = await getUserById(req.user._id);
-  console.log("User is: ", user);
+  // console.log("User is: ", user);
   const userUploads = [...user.uploads];
   userUploads.push(paper._id);
   await User.updateOne(
@@ -148,7 +187,7 @@ exports.postUpload = async (req, res, next) => {
     { uploads: userUploads },
     (err, docs) => {
       if (err) {
-        console.log("Error while updating user: ", err);
+        //   console.log("Error while updating user: ", err);
       } else console.log("User updated successfully");
     }
   )
