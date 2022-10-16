@@ -6,7 +6,7 @@ const File = require("../models/file");
 const User = require("../models/user");
 const checkExtension = require("../utils/checkExtension");
 const savePaper = require("../utils/savePaper");
-const { merge } = require("merge-pdf-buffers");
+// const { merge } = require("merge-pdf-buffers");
 const file = require("../models/file");
 // const Canvas = require("canvas");
 
