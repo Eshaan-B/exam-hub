@@ -8,7 +8,7 @@ const checkExtension = require("../utils/checkExtension");
 const savePaper = require("../utils/savePaper");
 const { merge } = require("merge-pdf-buffers");
 const file = require("../models/file");
-const Canvas = require("canvas");
+// const Canvas = require("canvas");
 
 exports.getExplore = (req, res, next) => {
   res.render("explore");
@@ -126,14 +126,14 @@ exports.postUpload = async (req, res, next) => {
       }
 
       //logic to convert image buffer to pdf buffer
-      const img = new Canvas.Image();
-      img.src = Buffer.from(JSON.parse(myPaper).data, "base64");
-      const canvas = Canvas.createCanvas(img.width, img.height, "pdf");
-      const context = canvas.getContext("2d");
-      img.onload = function () {
-        context.drawImage(img, 0, 0, img.width, img.height);
-      };
-      pdfBuffers.push(canvas.toBuffer());
+      // const img = new Canvas.Image();
+      // img.src = Buffer.from(JSON.parse(myPaper).data, "base64");
+      // const canvas = Canvas.createCanvas(img.width, img.height, "pdf");
+      // const context = canvas.getContext("2d");
+      // img.onload = function () {
+      //   context.drawImage(img, 0, 0, img.width, img.height);
+      // };
+      // pdfBuffers.push(canvas.toBuffer());
       // let buff = new Buffer.from(JSON.parse(paper).data, "base64");
       // filesBuffer.push(buff);
       console.log("Converting to pdf...");
