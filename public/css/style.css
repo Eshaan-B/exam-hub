@@ -116,7 +116,7 @@ a.button2 {
     transition: all 0.2s;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1000px) {
     #navbarSupportedContent {
         text-align: right;
         background-color: white;

@@ -104,7 +104,8 @@
           <option value="CBSE">
           <option value="State Board">
         </datalist>
-        <input list="subject-select" id="subject-selector" name="subject" placeholder="Select Subject" required>
+        <input list="subject-select" id="subject-selector" name="subject" placeholder="Select Subject" pattern="Biology|Math|English|Computer|Physics|Chemistry"
+        title='Must be "Biology", "Math", "English", "Computer", "Physics" or "Chemistry"' required>
         <datalist id="subject-select"  />
           <option value="Biology">
           <option value="Math">
@@ -113,7 +114,9 @@
           <option value="Physics">
           <option value="Chemistry">
         </datalist> 
-        <input list="class-select" id="class-selector" name="grade" placeholder="Select Class" required>
+        <input list="class-select" id="class-selector" name="grade" placeholder="Select Class"
+        pattern="VI|VII|VIII|IX|X|XI|XII"
+        title='Must be VI, VII, VIII, IX|, X, XI, XII' required>
         <datalist id="class-select"  />
           <option value="VI">
           <option value="VII">
@@ -123,6 +126,14 @@
           <option value="XI">
           <option value="XII">
         </datalist>
+        <input list="year-select" id="year-selector" name="year" placeholder="Select Year" required>
+        <datalist id="year-select"  />
+        <% let year = new Date().getFullYear(); for(let i=0;i<10;i++){%> 
+          <option value="<%=year-i%>">        
+            <% } %> 
+        </datalist>
+        <textarea rows="1" cols="40" name="description" id="description-box" placeholder="Give a description"></textarea>
+
           <button type="submit" class="btn btn-success">
             <% if(mode === 'upload'){%>Upload<%}else{%>Search<% } %>
           </button>
@@ -137,7 +148,7 @@
           name="paper"
           accept="image/png, image/jpeg"
           multiple
-          
+          required
         />
         <% } %>
         
@@ -145,6 +156,11 @@
     </div>
 
     <style>
+      #description-box{
+        margin-right: 20px;
+        resize: none;
+      }
+
       #board-selector {
         width: 15rem !important;
         box-sizing: border-box;
@@ -158,15 +174,21 @@
       }
       #class-selector {
         margin-left: 40px;
-        width: 15rem !important;
+        width: 10rem !important;
         box-sizing: border-box;
         border: 1.5px solid black;
         margin-right: 20px;
       }
-      @media (max-width: 700px) {
+      #year-selector {
+        width: 10rem !important;
+        box-sizing: border-box;
+        border: 1.5px solid black;
+        margin-right: 20px;
+      }
+      @media (max-width: 1000px) {
         #upload-form {
           width: 26rem !important;
-          height: 22rem !important;
+          height: 29rem !important;
         }
         #upload-details {
           display: block;
@@ -180,6 +202,9 @@
         }
         #class-selector {
           margin-left: 0px;
+        }
+        #description-box{
+          margin-bottom: 10px;
         }
         #homeqp-math {
           width: 26rem !important;
@@ -269,7 +294,7 @@
 
       #upload-form {
         width: 75rem;
-        height: 15rem;
+        height: 22rem;
         display: flex;
         flex-direction: column;
         background: rgba(255, 255, 255, 0.06);
@@ -309,7 +334,13 @@
         margin-top: 5%;
         margin-left: 3%;
         margin-right: 3%;
-        width: 150px;
+        width: 10px !important;
+      }
+      #year-select {
+        margin-top: 5%;
+        margin-left: 3%;
+        margin-right: 3%;
+        width: 100px;
       }
 
       #question-paper-upload {
@@ -363,6 +394,7 @@
                   <tr>
                     <th>Name</th>
                     <th>Date</th>
+                    <th>Description</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -378,7 +410,12 @@
                         <a href="/explore/getOneOfBatch/<%=i%> "><%=paper.filename %> <%=i %><% if(i!=paper.files.length){%>,<% } %>  </a>
                         <% }} %> 
                     </td>
-                    <td>April 2015</td>
+                    <% var d = paper.createdAt.toString().split(" "); %> 
+                    <% var uploadedDate = d[1]+" "+d[2]+", "+d[3] %> 
+                    <td><%=uploadedDate%> </td>
+                    <td>
+                      <%=paper.description %> 
+                    </td>
                   </tr>
                   <% }); %> 
                 </tbody>
