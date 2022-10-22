@@ -79,6 +79,18 @@ body {
     color: #4e9af1;
 }
 
+#upload-button { 
+    background-color:#25316D;
+    text-decoration: none;
+    margin-left: 46.5%;
+}
+
+#upload-button:hover {
+    background-color: white;
+    border-color: #25316D;
+    color: #25316D;
+}
+
 #contact-button {
     background-color:#f14e4e;
     text-decoration: none;

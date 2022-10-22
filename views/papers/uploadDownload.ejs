@@ -132,6 +132,7 @@
           <option value="<%=year-i%>">        
             <% } %> 
         </datalist>
+        <textarea rows="1" cols="40" name="description" id="description-box" placeholder="Give a description"></textarea>
 
           <button type="submit" class="btn btn-success">
             <% if(mode === 'upload'){%>Upload<%}else{%>Search<% } %>
@@ -155,6 +156,11 @@
     </div>
 
     <style>
+      #description-box{
+        margin-right: 20px;
+        resize: none;
+      }
+
       #board-selector {
         width: 15rem !important;
         box-sizing: border-box;
@@ -179,10 +185,10 @@
         border: 1.5px solid black;
         margin-right: 20px;
       }
-      @media (max-width: 700px) {
+      @media (max-width: 1000px) {
         #upload-form {
           width: 26rem !important;
-          height: 22rem !important;
+          height: 29rem !important;
         }
         #upload-details {
           display: block;
@@ -196,6 +202,9 @@
         }
         #class-selector {
           margin-left: 0px;
+        }
+        #description-box{
+          margin-bottom: 10px;
         }
         #homeqp-math {
           width: 26rem !important;
@@ -285,7 +294,7 @@
 
       #upload-form {
         width: 75rem;
-        height: 15rem;
+        height: 22rem;
         display: flex;
         flex-direction: column;
         background: rgba(255, 255, 255, 0.06);
