@@ -114,7 +114,9 @@
           <option value="Physics">
           <option value="Chemistry">
         </datalist> 
-        <input list="class-select" id="class-selector" name="grade" placeholder="Select Class" required>
+        <input list="class-select" id="class-selector" name="grade" placeholder="Select Class"
+        pattern="VI|VII|VIII|IX|X|XI|XII"
+        title='Must be VI, VII, VIII, IX|, X, XI, XII' required>
         <datalist id="class-select"  />
           <option value="VI">
           <option value="VII">
@@ -126,13 +128,10 @@
         </datalist>
         <input list="year-select" id="year-selector" name="year" placeholder="Select Year" required>
         <datalist id="year-select"  />
-          <option value="2016">
-          <option value="2017">
-          <option value="2018">
-          <option value="2019">
-          <option value="2020">
-          <option value="2021">
-          <option value="2022">
+        <% let year = new Date().getFullYear(); for(let i=0;i<10;i++){%> 
+          <option value="<%=year-i %> ">
+          
+            <% } %> 
         </datalist>
 
           <button type="submit" class="btn btn-success">

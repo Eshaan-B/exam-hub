@@ -165,9 +165,20 @@ exports.postUpload = async (req, res, next) => {
   // console.log(subject, grade, board);
   console.log("Single filename set to: ", filename);
   console.log("Multiple filename set to: ", multipleFilesName);
-  filename = req.body.subject + "_" + req.body.grade + "_" + req.body.board;
+  filename =
+    req.body.subject +
+    "_" +
+    req.body.grade +
+    "_" +
+    req.body.board +
+    "_" +
+    req.body.year;
+
   console.log(filename);
-  return res.send(filename);
+  return res.status(201).render("success", {
+    successMessage: "The file was uploaded successfully!",
+    user: req.user,
+  });
   const paper = new File({
     _id: new mongoose.Types.ObjectId(),
     type: fileType,
