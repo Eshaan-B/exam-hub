@@ -6,9 +6,9 @@ const File = require("../models/file");
 const User = require("../models/user");
 const checkExtension = require("../utils/checkExtension");
 const savePaper = require("../utils/savePaper");
-const { merge } = require("merge-pdf-buffers");
+//const { merge } = require("merge-pdf-buffers");
 const file = require("../models/file");
-const Canvas = require("canvas");
+// const Canvas = require("canvas");
 
 exports.getExplore = (req, res, next) => {
   res.render("explore");
@@ -116,38 +116,34 @@ exports.postUpload = async (req, res, next) => {
     fileType = JSON.parse(req.body.paper).type;
   } else {
     //MULTI FILE UPLOAD
-    console.log("Reached mutiple file upload");
-
-    fileType = "pdf";
-
-    let papersJSON = req.body.paper;
-    papersJSON.forEach((myPaper) => {
-      if (multipleFilesName === "") {
-        console.log("Paper name: ", JSON.parse(myPaper).name);
-        multipleFilesName = JSON.parse(myPaper).name;
-        multipleFilesName = multipleFilesName.split(".")[0] + ".pdf";
-        console.log("New multipleFilesName: ", multipleFilesName);
-      }
-
-      //logic to convert image buffer to pdf buffer
-      const img = new Canvas.Image();
-      img.src = Buffer.from(JSON.parse(myPaper).data, "base64");
-      const canvas = Canvas.createCanvas(img.width, img.height, "pdf");
-      const context = canvas.getContext("2d");
-      img.onload = function () {
-        context.drawImage(img, 0, 0, img.width, img.height);
-      };
-
-      pdfBuffers.push(canvas.toBuffer());
-      let buff = new Buffer.from(JSON.parse(myPaper).data, "base64");
-      console.log("Converting to pdf...");
-    });
-    let merged;
-    if (pdfBuffers.length > 0) {
-      console.log("Merging pdfs.....");
-      merged = await merge(pdfBuffers);
-      filesBuffer.push(merged);
-    }
+    // console.log("Reached mutiple file upload");
+    // fileType = "pdf";
+    // let papersJSON = req.body.paper;
+    // papersJSON.forEach((myPaper) => {
+    //   if (multipleFilesName === "") {
+    //     console.log("Paper name: ", JSON.parse(myPaper).name);
+    //     multipleFilesName = JSON.parse(myPaper).name;
+    //     multipleFilesName = multipleFilesName.split(".")[0] + ".pdf";
+    //     console.log("New multipleFilesName: ", multipleFilesName);
+    //   }
+    //   //logic to convert image buffer to pdf buffer
+    //   const img = new Canvas.Image();
+    //   img.src = Buffer.from(JSON.parse(myPaper).data, "base64");
+    //   const canvas = Canvas.createCanvas(img.width, img.height, "pdf");
+    //   const context = canvas.getContext("2d");
+    //   img.onload = function () {
+    //     context.drawImage(img, 0, 0, img.width, img.height);
+    //   };
+    //   pdfBuffers.push(canvas.toBuffer());
+    //   let buff = new Buffer.from(JSON.parse(myPaper).data, "base64");
+    //   console.log("Converting to pdf...");
+    // });
+    // let merged;
+    // if (pdfBuffers.length > 0) {
+    //   console.log("Merging pdfs.....");
+    //   //merged = await merge(pdfBuffers);
+    //   filesBuffer.push(merged);
+    // }
   }
   // var filename =
   //   filesBuffer.length == 1
