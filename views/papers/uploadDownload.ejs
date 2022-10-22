@@ -394,6 +394,7 @@
                   <tr>
                     <th>Name</th>
                     <th>Date</th>
+                    <th>Description</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -409,7 +410,12 @@
                         <a href="/explore/getOneOfBatch/<%=i%> "><%=paper.filename %> <%=i %><% if(i!=paper.files.length){%>,<% } %>  </a>
                         <% }} %> 
                     </td>
-                    <td>April 2015</td>
+                    <% var d = paper.createdAt.toString().split(" "); %> 
+                    <% var uploadedDate = d[1]+" "+d[2]+", "+d[3] %> 
+                    <td><%=uploadedDate%> </td>
+                    <td>
+                      <%=paper.description %> 
+                    </td>
                   </tr>
                   <% }); %> 
                 </tbody>

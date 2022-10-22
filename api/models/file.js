@@ -9,7 +9,7 @@ const fileSchema = mongoose.Schema(
     grade: String,
     year: String,
     files: [Buffer],
-    discription: String,
+    description: { type: String, default: "" },
     type: String,
     approved: Boolean,
     user: mongoose.Schema.Types.ObjectId,

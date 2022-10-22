@@ -165,14 +165,15 @@ exports.postUpload = async (req, res, next) => {
   // console.log(subject, grade, board);
   console.log("Single filename set to: ", filename);
   console.log("Multiple filename set to: ", multipleFilesName);
-  filename =
-    req.body.subject +
-    "_" +
-    req.body.grade +
-    "_" +
-    req.body.board +
-    "_" +
-    req.body.year;
+  // filename =
+  //   req.body.subject +
+  //   "_" +
+  //   req.body.grade +
+  //   "_" +
+  //   req.body.board +
+  //   "_" +
+  //   req.body.year;
+  // +".pdf";
 
   console.log(filename);
 
