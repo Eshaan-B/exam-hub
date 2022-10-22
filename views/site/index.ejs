@@ -1,98 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Examhub | Home</title>
 
-    <link rel="shortcut icon" href="/favicon.png" type="image/x-icon" />
-    <link rel="stylesheet" href="/css/style.css" />
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
-      crossorigin="anonymous"
-    />
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Examhub | Home</title>
 
-    <script
-      src="https://kit.fontawesome.com/551e46de4a.js"
-      crossorigin="anonymous"
-    ></script>
+  <link rel="shortcut icon" href="/favicon.png" type="image/x-icon" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
 
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
-  </head>
-  <body>
-    <!-- NAVBAR  -->
-    <header>
-      <nav class="navbar navbar-expand-lg fixed-top py-3" id="nav-bar">
-        <div class="container">
-          <div class="logo">
-            <a href="index.html">
-              <img src="/logo.svg" alt="Exam Hub" />
-            </a>
-          </div>
-          <button
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-            class="navbar-toggler navbar-toggler-right"
-          >
-            <i class="fa fa-bars"></i>
-          </button>
-          <div id="navbarSupportedContent" class="collapse navbar-collapse">
-            <ul class="navbar-nav ml-auto" id="current">
-              <li class="nav-item active">
-                <a href="#about" class="button2" id="about-button">About</a>
-              </li>
-              <li class="nav-item">
-              <% if(!user){%>
-                <a href="/auth/login" class="button2" id="contact-button"
-                  >Login/SignUp</a
-                >
-                <% } else{%>
-                  <a href="/auth/user/<%=user.id %> " class="button2" id="contact-button"
-                  >My Profile</a
-                  <% } %> 
-                </li>
+  <script src="https://kit.fontawesome.com/551e46de4a.js" crossorigin="anonymous"></script>
 
-              <li>
-                <a href="#contact" class="button2" id="login-button">Contact</a>
-              </li>
-            </ul>
-          </div>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+</head>
+
+<body>
+  <!-- NAVBAR  -->
+  <header>
+    <nav class="navbar navbar-expand-lg fixed-top py-3" id="nav-bar">
+      <div class="container">
+        <div class="logo">
+          <a href="/">
+            <img src="/logo.svg" alt="Exam Hub" />
+          </a>
         </div>
-      </nav>
-    </header>
-    <!-- NAVBAR  -->
-    <div class="container" id="main-text">
-      <div class="container py-3">
-        <div class="row h-100 align-items-center py-5">
-          <div class="col-lg-6">
-            <h1 class="display-4">Welcome to ExamHub!</h1>
-            <p class="lead text-muted mb-0">
-              Need to solidify your learning by practicing past question papers but can't any?
-              ExamHub is here to thte rescue! 
-              Explore past papers of various subjects, boards and years. <br><br>
-              Click on the button below and get practicing!
-            </p>
-            <a href="/explore?mode=upload" class="button2" id="search-button"
-              >Explore Papers<i class="fa fa-magnifying-glass"></i
-            ></a>
-          </div>
-          <div class="col-lg-6 d-lg-block">
-            <img src="resources/exam-main.png" alt="" class="img-fluid" />
-          </div>
+        <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+          class="navbar-toggler navbar-toggler-right">
+          <i class="fa fa-bars"></i>
+        </button>
+        <div id="navbarSupportedContent" class="collapse navbar-collapse">
+          <ul class="navbar-nav ml-auto" id="current">
+            <li class="nav-item active">
+              <a href="#about" class="button2" id="about-button">About</a>
+            </li>
+            <li class="nav-item">
+              <% if(!user){%>
+                <a href="/auth/login" class="button2" id="contact-button">Login/SignUp</a>
+                <% } else{%>
+                  <a href="/auth/user/<%=user.id %> " class="button2" id="contact-button">My Profile</a <% } %>
+            </li>
+
+            <li>
+              <a href="#contact" class="button2" id="login-button">Contact</a>
+            </li>
+            &nbsp;
+            &nbsp;
+            &nbsp;
+
+            <% if(user){%>
+              <li>
+                <a href="/auth/logout">
+                  <i
+                    class="fa fa-sign-out"
+                    style="font-size: 30px; color: #3c4048"
+                  ></i>
+                </a>
+              </li>
+              <% } %>  
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <!-- NAVBAR  -->
+  <div class="container" id="main-text">
+    <div class="container py-3">
+      <div class="row h-100 align-items-center py-5">
+        <div class="col-lg-6">
+          <h1 class="display-4">Welcome to ExamHub!</h1>
+          <p class="lead text-muted mb-0">
+            Need to solidify your learning by practicing past question papers but can't any?
+            ExamHub is here to thte rescue!
+            Explore past papers of various subjects, boards and years. <br><br>
+            Click on the button below and get practicing!
+          </p>
+          <a href="/explore?mode=upload" class="button2" id="search-button">Explore Papers<i
+              class="fa fa-magnifying-glass"></i></a>
+        </div>
+        <div class="col-lg-6 d-lg-block">
+          <img src="resources/exam-main.png" alt="" class="img-fluid" />
         </div>
       </div>
     </div>
-    <!-- <div class="heading">
+  </div>
+  <!-- <div class="heading">
       <h4>POWERED BY</h4>
     </div> -->
-    <!-- <div class="container bg-light" id="powered-by">
+  <!-- <div class="container bg-light" id="powered-by">
       <div class="software-used">
         <img src="resources/html.svg" alt="" />
         <img src="resources/css.svg" alt="" />
@@ -101,59 +99,82 @@
         <img src="resources/firebase.svg" alt="" />
       </div>
     </div> -->
+ 
+  <div id="about">
+    <p class="lead text-muted mb-0">
+      ExamHub is a free platform where one can upload, download, and explore various question papers on the basis of
+      filters like
+      subject, grade, year, and board. It is a free, user friendly, public knowledge sharing platform that makes an
+      academic's life easier
+      by making papers and notes readily available.
+    </p>
+    <h1>Hello</h1>
     <br>
-    <br>
-    <div id ="about" class="container">
-      <h1 class="display-4">About Us</h1>
-      <br>
-      <p class="lead text-muted mb-0">
-        ExamHub is a free platform where one can upload, download, and explore various question papers on the basis of filters like 
-        subject, grade, year, and board. It is a free, user friendly, public knowledge sharing platform that makes an academic's life easier
-        by making papers and notes readily available.
-      </p>
-      
-    </div>
-    <br>
-    <div id="contact">
-      
-      <form id="contact-form" action="mailto:eshaan.bhardy@gmail.com">      
-        <h1 class="display-4">Contact Us</h1>
-      <br>
-        <input name="name" type="text" class="feedback-input" placeholder="Name" />   
-        <input name="email" type="text" class="feedback-input" placeholder="Email" />
-        <textarea name="text" class="feedback-input" placeholder="Comment"></textarea>
-        <input type="submit" value="SUBMIT"/>
-      </form>
-    </div>
-    <div>
-      <footer class="w-100 py-4 flex-shrink-0" style="background-color: #212529 ;">
-        <div class="container py-4">
-            <div class="row gy-4 gx-5">
-                <div class="col-lg-4 col-md-6">
-                    <h5 class="h1 text-white">ExamHub.</h5>
-                    <p class="small text-muted mb-0">&copy; Copyrights. All rights reserved.</p>
-                </div>
-            </div>
-        </div>
-    </footer>
-    </div>
+    <h1>There</h1>
+  </div>
+  <style>#about{
+    visibility: hidden;
+  }</style>
+  <div class="container">
+    <h1 class="display-4">About Us</h1>
+    <p class="lead text-muted mb-0">
+      ExamHub is a free platform where one can upload, download, and explore various question papers on the basis of
+      filters like
+      subject, grade, year, and board. It is a free, user friendly, public knowledge sharing platform that makes an
+      academic's life easier
+      by making papers and notes readily available.
+    </p>
 
-    <script src="js/main.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script
-      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
-      integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-      crossorigin="anonymous"
-    ></script>
-  </body>
+  </div>
+  <div id="contact">
+    <p class="lead text-muted mb-0">
+      ExamHub is a free platform where one can upload, download, and explore various question papers on the basis of
+      filters like
+      subject, grade, year, and board. It is a free, user friendly, public knowledge sharing platform that makes an
+      academic's life easier
+      by making papers and notes readily available.
+    </p>
+    <h1>Hello</h1>
+    <h1>There</h1>
+  </div>
+  <style>#contact{
+    visibility: hidden;
+  }</style>
+  <div>
+
+    <form id="contact-form" action="mailto:eshaan.bhardy@gmail.com">
+      <h1 class="display-4">Contact Us</h1>
+      <br>
+      <input name="name" type="text" class="feedback-input" placeholder="Name" />
+      <input name="email" type="text" class="feedback-input" placeholder="Email" />
+      <textarea name="text" class="feedback-input" placeholder="Comment"></textarea>
+      <input type="submit" value="SUBMIT" />
+    </form>
+  </div>
+  <div>
+    <footer class="w-100 py-4 flex-shrink-0" style="background-color: #212529 ;">
+      <div class="container py-4">
+        <div class="row gy-4 gx-5">
+          <div class="col-lg-4 col-md-6">
+            <h5 class="h1 text-white">ExamHub.</h5>
+            <p class="small text-muted mb-0">&copy; Copyrights. All rights reserved.</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+</body>
+
 </html>
