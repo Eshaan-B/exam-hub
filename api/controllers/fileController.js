@@ -175,10 +175,7 @@ exports.postUpload = async (req, res, next) => {
     req.body.year;
 
   console.log(filename);
-  return res.status(201).render("success", {
-    successMessage: "The file was uploaded successfully!",
-    user: req.user,
-  });
+
   const paper = new File({
     _id: new mongoose.Types.ObjectId(),
     type: fileType,
@@ -190,6 +187,7 @@ exports.postUpload = async (req, res, next) => {
     user: mongoose.Types.ObjectId(req.user._id),
     files: filesBuffer,
     year: req.body.year,
+    description: req.body.description,
   });
   //Updating changes to user
   const user = await getUserById(req.user._id);

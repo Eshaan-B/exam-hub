@@ -129,8 +129,7 @@
         <input list="year-select" id="year-selector" name="year" placeholder="Select Year" required>
         <datalist id="year-select"  />
         <% let year = new Date().getFullYear(); for(let i=0;i<10;i++){%> 
-          <option value="<%=year-i %> ">
-          
+          <option value="<%=year-i%>">        
             <% } %> 
         </datalist>
 
