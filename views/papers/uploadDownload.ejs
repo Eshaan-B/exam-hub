@@ -104,7 +104,8 @@
           <option value="CBSE">
           <option value="State Board">
         </datalist>
-        <input list="subject-select" id="subject-selector" name="subject" placeholder="Select Subject" required>
+        <input list="subject-select" id="subject-selector" name="subject" placeholder="Select Subject" pattern="Biology|Math|English|Computer|Physics|Chemistry"
+        title='Must be "Biology", "Math", "English", "Computer", "Physics" or "Chemistry"' required>
         <datalist id="subject-select"  />
           <option value="Biology">
           <option value="Math">
@@ -122,6 +123,16 @@
           <option value="X">
           <option value="XI">
           <option value="XII">
+        </datalist>
+        <input list="year-select" id="year-selector" name="year" placeholder="Select Year" required>
+        <datalist id="year-select"  />
+          <option value="2016">
+          <option value="2017">
+          <option value="2018">
+          <option value="2019">
+          <option value="2020">
+          <option value="2021">
+          <option value="2022">
         </datalist>
 
           <button type="submit" class="btn btn-success">
@@ -159,7 +170,13 @@
       }
       #class-selector {
         margin-left: 40px;
-        width: 15rem !important;
+        width: 10rem !important;
+        box-sizing: border-box;
+        border: 1.5px solid black;
+        margin-right: 20px;
+      }
+      #year-selector {
+        width: 10rem !important;
         box-sizing: border-box;
         border: 1.5px solid black;
         margin-right: 20px;
