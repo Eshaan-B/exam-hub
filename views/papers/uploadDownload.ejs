@@ -123,6 +123,7 @@
           <option value="XI">
           <option value="XII">
         </datalist>
+
           <button type="submit" class="btn btn-success">
             <% if(mode === 'upload'){%>Upload<%}else{%>Search<% } %>
           </button>
@@ -137,7 +138,7 @@
           name="paper"
           accept="image/png, image/jpeg"
           multiple
-          
+          required
         />
         <% } %>
         
@@ -309,7 +310,13 @@
         margin-top: 5%;
         margin-left: 3%;
         margin-right: 3%;
-        width: 150px;
+        width: 10px !important;
+      }
+      #year-select {
+        margin-top: 5%;
+        margin-left: 3%;
+        margin-right: 3%;
+        width: 100px;
       }
 
       #question-paper-upload {

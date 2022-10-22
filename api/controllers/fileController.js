@@ -6,9 +6,9 @@ const File = require("../models/file");
 const User = require("../models/user");
 const checkExtension = require("../utils/checkExtension");
 const savePaper = require("../utils/savePaper");
-// const { merge } = require("merge-pdf-buffers");
+const { merge } = require("merge-pdf-buffers");
 const file = require("../models/file");
-// const Canvas = require("canvas");
+const Canvas = require("canvas");
 
 exports.getExplore = (req, res, next) => {
   res.render("explore");
@@ -98,7 +98,9 @@ exports.getUploadOrDownload = async (req, res, next) => {
 
 exports.postUpload = async (req, res, next) => {
   console.log("Reached PostUploadFile");
+
   const filesBuffer = [];
+
   let fileType;
   var multipleFilesName = "";
   const pdfBuffers = [];
@@ -115,7 +117,9 @@ exports.postUpload = async (req, res, next) => {
   } else {
     //MULTI FILE UPLOAD
     console.log("Reached mutiple file upload");
+
     fileType = "pdf";
+
     let papersJSON = req.body.paper;
     papersJSON.forEach((myPaper) => {
       if (multipleFilesName === "") {
@@ -126,16 +130,16 @@ exports.postUpload = async (req, res, next) => {
       }
 
       //logic to convert image buffer to pdf buffer
-      // const img = new Canvas.Image();
-      // img.src = Buffer.from(JSON.parse(myPaper).data, "base64");
-      // const canvas = Canvas.createCanvas(img.width, img.height, "pdf");
-      // const context = canvas.getContext("2d");
-      // img.onload = function () {
-      //   context.drawImage(img, 0, 0, img.width, img.height);
-      // };
-      // pdfBuffers.push(canvas.toBuffer());
-      // let buff = new Buffer.from(JSON.parse(paper).data, "base64");
-      // filesBuffer.push(buff);
+      const img = new Canvas.Image();
+      img.src = Buffer.from(JSON.parse(myPaper).data, "base64");
+      const canvas = Canvas.createCanvas(img.width, img.height, "pdf");
+      const context = canvas.getContext("2d");
+      img.onload = function () {
+        context.drawImage(img, 0, 0, img.width, img.height);
+      };
+
+      pdfBuffers.push(canvas.toBuffer());
+      let buff = new Buffer.from(JSON.parse(myPaper).data, "base64");
       console.log("Converting to pdf...");
     });
     let merged;
@@ -165,7 +169,9 @@ exports.postUpload = async (req, res, next) => {
   // console.log(subject, grade, board);
   console.log("Single filename set to: ", filename);
   console.log("Multiple filename set to: ", multipleFilesName);
-
+  filename = req.body.subject + "_" + req.body.grade + "_" + req.body.board;
+  console.log(filename);
+  return res.send(filename);
   const paper = new File({
     _id: new mongoose.Types.ObjectId(),
     type: fileType,
@@ -176,6 +182,7 @@ exports.postUpload = async (req, res, next) => {
     approved: false,
     user: mongoose.Types.ObjectId(req.user._id),
     files: filesBuffer,
+    year: req.body.year,
   });
   //Updating changes to user
   const user = await getUserById(req.user._id);
