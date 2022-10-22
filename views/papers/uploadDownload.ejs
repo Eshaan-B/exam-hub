@@ -133,6 +133,7 @@
           
             <% } %> 
         </datalist>
+        <textarea rows="1" cols="40" name="description" id="description-box" placeholder="Give a description"></textarea>
 
           <button type="submit" class="btn btn-success">
             <% if(mode === 'upload'){%>Upload<%}else{%>Search<% } %>
@@ -156,6 +157,11 @@
     </div>
 
     <style>
+      #description-box{
+        margin-right: 20px;
+        resize: none;
+      }
+
       #board-selector {
         width: 15rem !important;
         box-sizing: border-box;
@@ -286,7 +292,7 @@
 
       #upload-form {
         width: 75rem;
-        height: 15rem;
+        height: 22rem;
         display: flex;
         flex-direction: column;
         background: rgba(255, 255, 255, 0.06);
