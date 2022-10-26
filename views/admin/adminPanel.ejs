@@ -31,10 +31,9 @@
       <div class="container py-5 text-center">
         <h1 class="display-4 font-weight-bold">Admin Dashboard</h1>
         <p class="font-italic mb-0">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor
-          consequatur facilis eius perferendis quam esse atque optio repellendus
-          exercitationem asperiores at ex deserunt, corporis autem neque sint
-          natus laborum rem!
+          This is the admin dashboard for the admin to approve/reject files. <br>
+          Click on the file(hyperlink) to download and examine the files. If the file is fine, you can apprive it by clicking the 
+          '✓' icon, or reject by clicking the 'X' icon
         </p>
       </div>
     </div>
@@ -83,12 +82,19 @@
           <% papers.forEach((paper)=>{%>
           <tr>
             <td class="col-3">
-              <a href="/explore/getPaperById/<%=paper.id.toString()%>">
-                <%=paper.filename %></a
-              >
+              <% if(paper.files.length > 1){%> 
+                <% for(let i=0;i<paper.files.length;i++){ %> 
+                <a href="/explore/getOneOfBatch/<%=paper._id%>/<%=i%> ">Upload <%=i+1%><% if(i+1!=paper.files.length){%>,<% } %>  </a>
+                <%} }else{ %>
+                <a href="/explore/getPaperById/<%=paper.id.toString()%>">
+                <%=paper.filename %></a>  
+                <% } %> 
+              
             </td>
             <td class="col-3"><%=paper.user %></td>
-            <td class="col-3">2020</td>
+            <% var d = paper.createdAt.toString().split(" "); %> 
+                    <% var uploadedDate = d[1]+" "+d[2]+", "+d[3] %> 
+                    <td><%=uploadedDate%> </td>
             <td>
               <a
                 href="/admin/approve/<%=paper.id %> "

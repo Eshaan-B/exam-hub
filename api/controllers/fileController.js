@@ -6,7 +6,6 @@ const File = require("../models/file");
 const User = require("../models/user");
 const checkExtension = require("../utils/checkExtension");
 const savePaper = require("../utils/savePaper");
-//const { merge } = require("merge-pdf-buffers");
 const file = require("../models/file");
 // const Canvas = require("canvas");
 
@@ -41,11 +40,12 @@ exports.getExplore = (req, res, next) => {
 exports.getOneOfBatch = async (req, res, next) => {
   const paperId = new ObjectId(req.params.paperId);
   const doc = await File.find({ _id: paperId });
-  const filename = "Doc";
+  const filename = doc[0]["filename"];
+  const paperIndex = req.params.paperIndex;
   if (doc != null) {
     res
       .setHeader("Content-disposition", `attachment; filename=${filename}`)
-      .send(doc[0]);
+      .send(doc[0].files[paperIndex]);
   } else {
     console.log("Doc not found");
     res.redirect("/");
@@ -62,13 +62,9 @@ exports.getOneById = async (req, res, next) => {
     console.log("File found");
     //  res.setHeader("Content-disposition", `attachment; filename=${filename}`);
     let splitFileName = filename.split(" ");
-    if (splitFileName === "Doc") {
-      res.send(doc[0].files[splitFileName[1]]);
-    } else {
-      res
-        .setHeader("Content-disposition", `attachment; filename=${filename}`)
-        .send(doc[0].files[0]);
-    }
+    res
+      .setHeader("Content-disposition", `attachment; filename=${filename}`)
+      .send(doc[0].files[0]);
   } else {
     console.log("doc not found");
     res.redirect("/");
@@ -100,50 +96,43 @@ exports.postUpload = async (req, res, next) => {
   console.log("Reached PostUploadFile");
 
   const filesBuffer = [];
-
+  const buffersList = [];
   let fileType;
   var multipleFilesName = "";
-  const pdfBuffers = [];
-  let filename = "";
+  let filename =
+    req.body.subject +
+    "_" +
+    req.body.grade +
+    "_" +
+    req.body.board +
+    "_" +
+    req.body.year;
+  let multiple = false;
   //single file upload
   if (typeof req.body.paper === "string") {
-    console.log("Single file upload");
+    multiple = false;
+    let splitname = JSON.parse(req.body.paper).name.split(".");
+    filename = filename + "." + splitname[1];
+    console.log("filename is -- ", filename);
 
-    filename = JSON.parse(req.body.paper).name;
     filesBuffer.push(
       new Buffer.from(JSON.parse(req.body.paper).data, "base64")
     );
     fileType = JSON.parse(req.body.paper).type;
   } else {
     //MULTI FILE UPLOAD
-    // console.log("Reached mutiple file upload");
+    multiple = true;
+    console.log("Reached mutiple file upload");
     // fileType = "pdf";
-    // let papersJSON = req.body.paper;
-    // papersJSON.forEach((myPaper) => {
-    //   if (multipleFilesName === "") {
-    //     console.log("Paper name: ", JSON.parse(myPaper).name);
-    //     multipleFilesName = JSON.parse(myPaper).name;
-    //     multipleFilesName = multipleFilesName.split(".")[0] + ".pdf";
-    //     console.log("New multipleFilesName: ", multipleFilesName);
-    //   }
-    //   //logic to convert image buffer to pdf buffer
-    //   const img = new Canvas.Image();
-    //   img.src = Buffer.from(JSON.parse(myPaper).data, "base64");
-    //   const canvas = Canvas.createCanvas(img.width, img.height, "pdf");
-    //   const context = canvas.getContext("2d");
-    //   img.onload = function () {
-    //     context.drawImage(img, 0, 0, img.width, img.height);
-    //   };
-    //   pdfBuffers.push(canvas.toBuffer());
-    //   let buff = new Buffer.from(JSON.parse(myPaper).data, "base64");
-    //   console.log("Converting to pdf...");
-    // });
-    // let merged;
-    // if (pdfBuffers.length > 0) {
-    //   console.log("Merging pdfs.....");
-    //   //merged = await merge(pdfBuffers);
-    //   filesBuffer.push(merged);
-    // }
+    let papersJSON = req.body.paper;
+    papersJSON.forEach((myPaper, i) => {
+      let splitname = JSON.parse(myPaper).name.split(".");
+      if (i == 0) {
+        filename = filename + "." + splitname[1];
+      }
+      console.log(`file name: ${filename}`);
+      filesBuffer.push(new Buffer.from(JSON.parse(myPaper).data, "base64"));
+    });
   }
   // var filename =
   //   filesBuffer.length == 1
@@ -163,8 +152,7 @@ exports.postUpload = async (req, res, next) => {
   // const grade = req.body.grade;
   // const board = req.body.board;
   // console.log(subject, grade, board);
-  console.log("Single filename set to: ", filename);
-  console.log("Multiple filename set to: ", multipleFilesName);
+  console.log("Filename set to: ", filename);
   // filename =
   //   req.body.subject +
   //   "_" +
@@ -186,6 +174,7 @@ exports.postUpload = async (req, res, next) => {
     board: req.body.board,
     approved: false,
     user: mongoose.Types.ObjectId(req.user._id),
+    multiple: multiple,
     files: filesBuffer,
     year: req.body.year,
     description: req.body.description,

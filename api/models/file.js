@@ -13,6 +13,7 @@ const fileSchema = mongoose.Schema(
     type: String,
     approved: Boolean,
     user: mongoose.Schema.Types.ObjectId,
+    multiple: Boolean,
   },
   { timestamps: true }
 );
