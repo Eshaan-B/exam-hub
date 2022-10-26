@@ -408,8 +408,8 @@
                         ><%=paper.filename%>
                       </a>
                       <% }else{%>
-                        <% for(let i=1;i<=paper.files.length;i++){ %> 
-                        <a href="/explore/getOneOfBatch/<%=i%> "><%=paper.filename %> <%=i %><% if(i!=paper.files.length){%>,<% } %>  </a>
+                        <% for(let i=0;i<paper.files.length;i++){ %> 
+                        <a href="/explore/getOneOfBatch/<%=paper._id%>/<%=i%> ">Upload <%=i %><% if(i+1!=paper.files.length){%>,<% } %>  </a>
                         <% }} %> 
                     </td>
                     <% var d = paper.createdAt.toString().split(" "); %> 
