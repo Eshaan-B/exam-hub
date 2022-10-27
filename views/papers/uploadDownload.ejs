@@ -77,6 +77,7 @@
     </script>
 
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   </head>
   <body>
     <%-include('../includes/navbar') %>
@@ -143,6 +144,8 @@
           <br>
           <br>
           <br>
+          <div class="g-recaptcha" data-sitekey="6LdORLoiAAAAALZwHrs0dYKHFlj1zeXpnkxwI8j3"></div>
+
         <input
           type="file"
           id="question-paper-upload"
@@ -409,7 +412,7 @@
                       </a>
                       <% }else{%>
                         <% for(let i=0;i<paper.files.length;i++){ %> 
-                        <a href="/explore/getOneOfBatch/<%=paper._id%>/<%=i%> ">Upload <%=i %><% if(i+1!=paper.files.length){%>,<% } %>  </a>
+                        <a href="/explore/getOneOfBatch/<%=paper._id%>/<%=i%> ">Upload <%=i+1 %><% if(i+1!=paper.files.length){%>,<% } %>  </a>
                         <% }} %> 
                     </td>
                     <% var d = paper.createdAt.toString().split(" "); %> 
